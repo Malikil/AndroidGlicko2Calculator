@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="group10.glicko2calculator.AddGameActivity">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <EditText
+            android:id="@+id/player1Entry"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="@string/player1Label"
+            android:inputType="textPersonName"
+            android:layout_centerHorizontal="true" />
+
+        <EditText
+            android:id="@+id/player2Entry"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/player1Entry"
+            android:layout_marginTop="16dp"
+            android:ems="10"
+            android:hint="@string/player2Label"
+            android:inputType="textPersonName" />
+
+        <Button
+            android:id="@+id/p1WinButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/player1Label"
+            android:layout_below="@+id/player2Entry"
+            android:layout_marginTop="32dp" />
+
+        <Button
+            android:id="@+id/tieButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/tieButton"
+            android:layout_toEndOf="@+id/p1WinButton"
+            android:layout_alignTop="@+id/p1WinButton"
+            android:layout_marginStart="8dp" />
+
+        <Button
+            android:id="@+id/p2WinButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/player2Label"
+            android:layout_toEndOf="@+id/tieButton"
+            android:layout_alignTop="@+id/p1WinButton"
+            android:layout_marginStart="8dp" />
+
+    </RelativeLayout>
+</android.support.constraint.ConstraintLayout>

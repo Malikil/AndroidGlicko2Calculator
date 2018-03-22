@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="group10.glicko2calculator.MainActivity">
+
+    <RelativeLayout
+        android:id="@+id/container"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.45">
+
+        <Button
+            android:id="@+id/viewInfoButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:text="@string/viewInfo" />
+
+        <Button
+            android:id="@+id/viewPlayersButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/viewInfoButton"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="8dp"
+            android:text="@string/viewPlayers" />
+
+        <Button
+            android:id="@+id/viewGamesButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/viewPlayersButton"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="8dp"
+            android:text="@string/viewGames" />
+
+        <Button
+            android:id="@+id/systemInfoButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/viewGamesButton"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="8dp"
+            android:text="@string/viewSystem" />
+    </RelativeLayout>
+</android.support.constraint.ConstraintLayout>

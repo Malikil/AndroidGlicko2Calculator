@@ -1,0 +1,47 @@
+<resources>
+    <!-- General -->
+    <string name="saveText">Save</string>
+    <string name="cancelText">Cancel</string>
+
+    <!-- Landing Page -->
+    <string name="app_name">Glicko-2 Calculator</string>
+    <string name="viewInfo">About App</string>
+    <string name="viewPlayers">View Players</string>
+    <string name="viewGames">View Games</string>
+    <string name="viewSystem">Calculator Settings</string>
+
+    <!-- About Screen -->
+    <string name="title_activity_about">Glicko-2 Calculator: About</string>
+    <string name="creatorText">This app was created by Eric, Andreja, and Dave for a Mobile
+        Application Development course.</string>
+    <string name="glickmanText">The Glicko-2 rating system used by this app was created by Prof.
+        Mark Glickman. The paper can be found at http://glicko.net/glicko/glicko2.pdf</string>
+    <string name="legalText">The calculations are done using a glicko-2 implementation written by
+        Jeremy Gooch and released under a BSD 2-Clause license, which allows for commercial and
+        private use with or without modification. The source files and a copy of the original
+        license can be found at https://github.com/goochjs/glicko2</string>
+
+    <!-- Players Screen -->
+    <string name="title_activity_players">All Players</string>
+
+    <!-- Add Player -->
+    <string name="title_activity_add_player">Add Player</string>
+
+    <!-- Games Screen -->
+    <string name="title_activity_games">All Games</string>
+
+    <!-- Add Game -->
+    <string name="title_activity_add_game">Add Game</string>
+    <string name="player1Label">Player 1</string>
+    <string name="player2Label">Player 2</string>
+    <string name="p1WinButton">Player 1 Win</string>
+    <string name="p2WinButton">Player 2 Win</string>
+    <string name="tieButton">Tie</string>
+
+    <!-- Settings Screen -->
+    <string name="title_activity_settings">Calculator Settings</string>
+    <string name="tauText">System Tau</string>
+    <string name="defRatingText">Default Rating</string>
+    <string name="defDeviationText">Default Rating Deviation</string>
+    <string name="defVolatilityText">Default Volatility</string>
+</resources>
