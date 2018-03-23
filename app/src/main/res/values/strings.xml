@@ -26,14 +26,19 @@
 
     <!-- Add Player -->
     <string name="title_activity_add_player">Add Player</string>
+    <string name="nameHint">Player Name</string>
+    <string name="ratingText">Rating</string>
+    <string name="deviationText">Rating Deviation</string>
+    <string name="volatilityText">Volatility</string>
 
     <!-- Games Screen -->
     <string name="title_activity_games">All Games</string>
+    <string name="player1Label">Player 1</string>
+    <string name="player2Label">Player 2</string>
+    <string name="winnerText">Winner</string>
 
     <!-- Add Game -->
     <string name="title_activity_add_game">Add Game</string>
-    <string name="player1Label">Player 1</string>
-    <string name="player2Label">Player 2</string>
     <string name="p1WinButton">Player 1 Win</string>
     <string name="p2WinButton">Player 2 Win</string>
     <string name="tieButton">Tie</string>

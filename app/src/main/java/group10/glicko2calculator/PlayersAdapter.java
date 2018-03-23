@@ -7,34 +7,32 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import org.goochjs.glicko2.Rating;
+
 import java.util.ArrayList;
 import java.util.zip.Inflater;
 
-public class CustomAdapter extends BaseAdapter
+public class PlayersAdapter extends BaseAdapter
 {
     private Activity context;
-    private ArrayList<String> col1;
-    private ArrayList col2;
-    private ArrayList col3;
+    private ArrayList<Rating> list;
 
-    public CustomAdapter(Activity context, ArrayList<String> col1, ArrayList col2, ArrayList col3)
+    public PlayersAdapter(Activity context, ArrayList<Rating> list)
     {
         this.context = context;
-        this.col1 = col1;
-        this.col2 = col2;
-        this.col3 = col3;
+        this.list = list;
     }
 
     @Override
     public int getCount()
     {
-        return col1.size();
+        return list.size();
     }
 
     @Override
     public Object getItem(int i)
     {
-        return new Object[] { col1.get(i), col2.get(i), col3.get(i) };
+        return list.get(i);
     }
 
     @Override
@@ -52,9 +50,10 @@ public class CustomAdapter extends BaseAdapter
             view = inflater.inflate(R.layout.list_adapter_layout, null);
         }
 
-        ((TextView)view.findViewById(R.id.column1)).setText(col1.get(i));
-        ((TextView)view.findViewById(R.id.column2)).setText(col2.get(i).toString());
-        ((TextView)view.findViewById(R.id.column3)).setText(col3.get(i).toString());
+        Rating player = list.get(i);
+        ((TextView)view.findViewById(R.id.column1)).setText(player.getUid());
+        ((TextView)view.findViewById(R.id.column2)).setText(Double.toString(player.getRating()));
+        ((TextView)view.findViewById(R.id.column3)).setText(Double.toString(player.getRatingDeviation()));
 
         return view;
     }
