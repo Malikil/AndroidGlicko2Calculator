@@ -1,5 +1,6 @@
 package group10.glicko2calculator;
 import android.app.Activity;
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.DatabaseErrorHandler;
@@ -37,8 +38,19 @@ class DatabaseHandler {
 
     static Cursor getPlayers()
     {
-        String query = "SELECT uID, rating, deviation FROM Players;";
+        String query = "SELECT * FROM Players;";
         return db.rawQuery(query, null);
+    }
+
+    static long addPlayer(String uID, float rating, float deviation, double volatility)
+    {
+        ContentValues cv = new ContentValues();
+        cv.put("uID", uID);
+        cv.put("rating", rating);
+        cv.put("deviation", deviation);
+        cv.put("volatility", volatility);
+
+        return db.insert("Players", null, cv);
     }
 
     static Cursor getGames()
