@@ -35,7 +35,7 @@
     <string name="title_activity_games">All Games</string>
     <string name="player1Label">Player 1</string>
     <string name="player2Label">Player 2</string>
-    <string name="winnerText">Winner</string>
+    <string name="isDrawText">Is Draw</string>
 
     <!-- Add Game -->
     <string name="title_activity_add_game">Add Game</string>

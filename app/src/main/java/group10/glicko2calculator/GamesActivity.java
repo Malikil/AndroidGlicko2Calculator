@@ -7,6 +7,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.ListView;
 
 public class GamesActivity extends AppCompatActivity {
 
@@ -17,6 +18,10 @@ public class GamesActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        ((ListView)findViewById(R.id.gamesList)).setAdapter(
+                new GamesAdapter(this, DatabaseHandler.getGames())
+        );
+
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -26,5 +31,4 @@ public class GamesActivity extends AppCompatActivity {
             }
         });
     }
-
 }

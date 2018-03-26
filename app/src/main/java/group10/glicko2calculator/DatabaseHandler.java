@@ -19,19 +19,31 @@ class DatabaseHandler {
     static void openDB(Activity context, String name)
     {
         db = context.openOrCreateDatabase(name, Activity.MODE_PRIVATE, null);
+
+        db.execSQL("CREATE TABLE IF NOT EXISTS Players (" +
+                "uID VARCHAR(32) PRIMARY KEY, " +
+                "rating REAL NOT NULL, " +
+                "deviation REAL NOT NULL," +
+                "volatility FLOAT NOT NULL);");
+
+        db.execSQL("CREATE TABLE IF NOT EXISTS Games (" +
+                "gameID INTEGER PRIMARY KEY, " +
+                "winner VARCHAR(32) NOT NULL, " +
+                "loser VARCHAR(32) NOT NULL, " +
+                "isDraw INTEGER NOT NULL,\n" +
+                "FOREIGN KEY (winner) REFERENCES Players (uID),\n" +
+                "FOREIGN KEY (loser) REFERENCES Players (uID));");
     }
 
     static Cursor getPlayers()
     {
-        db.execSQL("CREATE TABLE IF NOT EXISTS Players (" +
-                "uID VARCHAR(32) PRIMARY KEY, " +
-                "rating REAL, " +
-                "deviation REAL," +
-                "volatility FLOAT);");
-
         String query = "SELECT uID, rating, deviation FROM Players;";
         return db.rawQuery(query, null);
     }
 
-
+    static Cursor getGames()
+    {
+        String query = "SELECT * FROM Games;";
+        return db.rawQuery(query, null);
+    }
 }
