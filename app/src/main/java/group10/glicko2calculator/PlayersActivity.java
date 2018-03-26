@@ -17,18 +17,10 @@ public class PlayersActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_players);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        Drawable drawable = getResources().getDrawable(R.drawable.arrow);
-        drawable = resize(drawable, 64, 64);
-        toolbar.setNavigationIcon(drawable);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        putInToolbar(toolbar);
+        FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view)
@@ -38,6 +30,17 @@ public class PlayersActivity extends AppCompatActivity {
         });
     }
 
+    private void putInToolbar(Toolbar toolbar) {
+        Drawable drawable = getResources().getDrawable(R.drawable.arrow);
+        drawable = resize(drawable, 64, 64);
+        toolbar.setNavigationIcon(drawable);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+    }
     private Drawable resize(Drawable image, int width, int height) {
         Bitmap b = ((BitmapDrawable)image).getBitmap();
         Bitmap bitmapResized = Bitmap.createScaledBitmap(b, width, height, false);
