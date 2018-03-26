@@ -59,4 +59,13 @@ public class PlayersAdapter extends BaseAdapter
 
         return view;
     }
+
+    public void updatePlayers(Cursor cursor)
+    {
+        if (cursor != null)
+        {
+            this.cursor = cursor;
+            notifyDataSetChanged();
+        }
+    }
 }
