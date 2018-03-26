@@ -38,7 +38,8 @@ class DatabaseHandler {
 
     static Cursor getPlayers()
     {
-        String query = "SELECT * FROM Players;";
+        String query = "SELECT * FROM Players " +
+                "ORDER BY uID ASC;";
         return db.rawQuery(query, null);
     }
 

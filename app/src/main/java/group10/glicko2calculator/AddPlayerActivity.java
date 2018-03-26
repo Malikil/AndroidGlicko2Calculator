@@ -111,7 +111,10 @@ public class AddPlayerActivity extends AppCompatActivity
                                 Toast.LENGTH_SHORT
                         ).show();
                     else
+                    {
+                        setResult(RESULT_OK);
                         finish();
+                    }
                 }
             }
         });
@@ -119,6 +122,7 @@ public class AddPlayerActivity extends AppCompatActivity
             @Override
             public void onClick(View view)
             {
+                setResult(RESULT_CANCELED);
                 finish();
             }
         });
