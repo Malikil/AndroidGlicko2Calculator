@@ -1,6 +1,7 @@
 package group10.glicko2calculator;
 
 import android.app.Activity;
+import android.database.Cursor;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,24 +16,25 @@ import java.util.zip.Inflater;
 public class PlayersAdapter extends BaseAdapter
 {
     private Activity context;
-    private ArrayList<Rating> list;
+    private Cursor cursor;
 
-    public PlayersAdapter(Activity context, ArrayList<Rating> list)
+    public PlayersAdapter(Activity context, Cursor dbCursor)
     {
         this.context = context;
-        this.list = list;
+        cursor = dbCursor;
     }
 
     @Override
     public int getCount()
     {
-        return list.size();
+        return cursor.getCount();
     }
 
     @Override
     public Object getItem(int i)
     {
-        return list.get(i);
+        cursor.moveToPosition(i);
+        return cursor.getString(0);
     }
 
     @Override
@@ -49,11 +51,11 @@ public class PlayersAdapter extends BaseAdapter
             LayoutInflater inflater = context.getLayoutInflater();
             view = inflater.inflate(R.layout.list_adapter_layout, null);
         }
+        cursor.moveToPosition(i);
 
-        Rating player = list.get(i);
-        ((TextView)view.findViewById(R.id.column1)).setText(player.getUid());
-        ((TextView)view.findViewById(R.id.column2)).setText(Double.toString(player.getRating()));
-        ((TextView)view.findViewById(R.id.column3)).setText(Double.toString(player.getRatingDeviation()));
+        ((TextView)view.findViewById(R.id.column1)).setText(cursor.getString(0));
+        ((TextView)view.findViewById(R.id.column2)).setText(cursor.getString(1));
+        ((TextView)view.findViewById(R.id.column3)).setText(cursor.getString(2));
 
         return view;
     }

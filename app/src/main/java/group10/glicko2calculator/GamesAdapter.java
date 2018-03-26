@@ -1,6 +1,7 @@
 package group10.glicko2calculator;
 
 import android.app.Activity;
+import android.database.Cursor;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,7 @@ import java.util.ArrayList;
 public class GamesAdapter extends BaseAdapter
 {
     private Activity context;
+    private Cursor cursor;
     private ArrayList<Result> list;
 
     public GamesAdapter(Activity context, ArrayList<Result> list)
