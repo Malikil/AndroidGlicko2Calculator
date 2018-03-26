@@ -33,8 +33,8 @@
 
     <!-- Games Screen -->
     <string name="title_activity_games">All Games</string>
-    <string name="player1Label">Player 1</string>
-    <string name="player2Label">Player 2</string>
+    <string name="player1Label">Winner</string>
+    <string name="player2Label">Loser</string>
     <string name="isDrawText">Is Draw</string>
 
     <!-- Add Game -->

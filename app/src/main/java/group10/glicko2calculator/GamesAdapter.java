@@ -55,9 +55,18 @@ public class GamesAdapter extends BaseAdapter
         ((TextView)view.findViewById(R.id.column2)).setText(cursor.getString(2));
         boolean isDraw = cursor.getInt(3) > 0;
         ((TextView)view.findViewById(R.id.column3)).setText(isDraw
-                            ? ""
-                            : "Draw");
+                            ? "Draw"
+                            : "");
 
         return view;
+    }
+
+    void updateGames(Cursor cursor)
+    {
+        if (this.cursor != null)
+            this.cursor.close();
+        if (cursor != null)
+            this.cursor = cursor;
+        notifyDataSetChanged();
     }
 }

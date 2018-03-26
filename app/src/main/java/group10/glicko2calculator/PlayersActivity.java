@@ -47,7 +47,6 @@ public class PlayersActivity extends AppCompatActivity {
             ((PlayersAdapter)
                     ((ListView)findViewById(R.id.playerList)).getAdapter()
             ).updatePlayers(DatabaseHandler.getPlayers());
-            Log.i("Activity Result", "Updated Players");
         }
     }
 }
