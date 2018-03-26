@@ -27,8 +27,22 @@ public class GamesActivity extends AppCompatActivity {
             @Override
             public void onClick(View view)
             {
-                startActivity(new Intent(GamesActivity.this, AddGameActivity.class));
+                startActivityForResult(
+                        new Intent(GamesActivity.this, AddGameActivity.class),
+                        0
+                );
             }
         });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        if (resultCode == RESULT_OK)
+        {
+            ((GamesAdapter)
+                    ((ListView)findViewById(R.id.gamesList)).getAdapter()
+            ).updateGames(DatabaseHandler.getGames());
+        }
     }
 }

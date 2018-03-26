@@ -43,6 +43,21 @@ class DatabaseHandler {
         return db.rawQuery(query, null);
     }
 
+    static boolean playerExists(String uID)
+    {
+        Cursor result = db.rawQuery(
+                "SELECT uID FROM Players " +
+                        "WHERE uID = '" + uID + "';",
+                null);
+        if (result != null && result.getCount() > 0)
+        {
+            result.close();
+            return true;
+        }
+        else
+            return false;
+    }
+
     static long addPlayer(String uID, float rating, float deviation, double volatility)
     {
         ContentValues cv = new ContentValues();
@@ -58,5 +73,15 @@ class DatabaseHandler {
     {
         String query = "SELECT * FROM Games;";
         return db.rawQuery(query, null);
+    }
+
+    static long addGame(String winner, String loser, boolean isDraw)
+    {
+        ContentValues cv = new ContentValues();
+        cv.put("winner", winner);
+        cv.put("loser", loser);
+        cv.put("isDraw", isDraw);
+
+        return db.insert("Games", null, cv);
     }
 }
