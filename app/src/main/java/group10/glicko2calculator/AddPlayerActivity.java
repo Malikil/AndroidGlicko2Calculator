@@ -35,6 +35,7 @@ public class AddPlayerActivity extends AppCompatActivity
             public void onClick(View view)
             {
                 // TODO Add new player to database
+                finish();
             }
         });
         ((Button)findViewById(R.id.cancelButton)).setOnClickListener(new View.OnClickListener() {
