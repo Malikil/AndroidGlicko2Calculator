@@ -7,6 +7,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.ListView;
 
 public class PlayersActivity extends AppCompatActivity {
 
@@ -18,7 +19,9 @@ public class PlayersActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         // Load players from database into adapter
-        
+        ((ListView)findViewById(R.id.playerList)).setAdapter(
+                new PlayersAdapter(this, DatabaseHandler.getPlayers())
+        );
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {

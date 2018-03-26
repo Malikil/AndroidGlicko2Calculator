@@ -23,6 +23,12 @@ class DatabaseHandler {
 
     static Cursor getPlayers()
     {
+        db.execSQL("CREATE TABLE IF NOT EXISTS Players (" +
+                "uID VARCHAR(32) PRIMARY KEY, " +
+                "rating REAL, " +
+                "deviation REAL," +
+                "volatility FLOAT);");
+
         String query = "SELECT uID, rating, deviation FROM Players;";
         return db.rawQuery(query, null);
     }
