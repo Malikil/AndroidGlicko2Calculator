@@ -10,7 +10,9 @@ import android.widget.TextView;
 
 import org.goochjs.glicko2.Rating;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Locale;
 import java.util.zip.Inflater;
 
 public class PlayersAdapter extends BaseAdapter
@@ -53,9 +55,11 @@ public class PlayersAdapter extends BaseAdapter
         }
         cursor.moveToPosition(i);
 
+        // Use a number formatter to display numbers
+        NumberFormat format = NumberFormat.getInstance(Locale.getDefault());
         ((TextView)view.findViewById(R.id.column1)).setText(cursor.getString(0));
-        ((TextView)view.findViewById(R.id.column2)).setText(cursor.getString(1));
-        ((TextView)view.findViewById(R.id.column3)).setText(cursor.getString(2));
+        ((TextView)view.findViewById(R.id.column2)).setText(format.format(cursor.getFloat(1)));
+        ((TextView)view.findViewById(R.id.column3)).setText(format.format(cursor.getFloat(2)));
 
         return view;
     }
