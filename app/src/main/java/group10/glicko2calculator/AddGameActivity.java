@@ -1,5 +1,8 @@
 package group10.glicko2calculator;
 
+import android.content.SharedPreferences;
+import android.database.Cursor;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -7,6 +10,10 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import org.goochjs.glicko2.Rating;
+import org.goochjs.glicko2.RatingCalculator;
+import org.goochjs.glicko2.RatingPeriodResults;
 
 public class AddGameActivity extends AppCompatActivity {
     @Override
@@ -55,7 +62,59 @@ public class AddGameActivity extends AppCompatActivity {
                             Toast.LENGTH_SHORT).show();
                 else
                 {
-                    Toast.makeText(AddGameActivity.this, Boolean.toString(draw), Toast.LENGTH_SHORT).show();
+                    // TODO For now, add games to the calculator here
+                    // Create player objects using database information
+                    Cursor player = DatabaseHandler.getPlayers(winner);
+                    player.moveToFirst();
+                    Rating rWinner = new Rating(
+                            winner,
+                            null,
+                            player.getFloat(1),
+                            player.getFloat(2),
+                            player.getFloat(3)
+                    );
+
+                    player = DatabaseHandler.getPlayers(loser);
+                    player.moveToFirst();
+                    Rating rLoser = new Rating(
+                            loser,
+                            null,
+                            player.getFloat(1),
+                            player.getFloat(2),
+                            player.getFloat(3)
+                    );
+
+                    // Create a result set
+                    RatingPeriodResults results = new RatingPeriodResults();
+                    if (draw)
+                        results.addDraw(rWinner, rLoser);
+                    else
+                        results.addResult(rWinner, rLoser);
+
+                    // Calculate new ratings
+                    SharedPreferences preferences =
+                            PreferenceManager.getDefaultSharedPreferences(AddGameActivity.this);
+                    RatingCalculator calculator = new RatingCalculator(
+                            preferences.getFloat("System Tau", 0.75F),
+                            preferences.getFloat("Default Volatility", 0.06F)
+                    );
+                    calculator.updateRatings(results);
+
+                    // Update database with new results
+                    DatabaseHandler.updatePlayer(
+                            winner,
+                            (float)rWinner.getRating(),
+                            (float)rWinner.getRatingDeviation(),
+                            (float)rWinner.getVolatility()
+                    );
+
+                    DatabaseHandler.updatePlayer(
+                            loser,
+                            (float)rLoser.getRating(),
+                            (float)rLoser.getRatingDeviation(),
+                            (float)rLoser.getVolatility()
+                    );
+
                     setResult(RESULT_OK);
                     finish();
                 }

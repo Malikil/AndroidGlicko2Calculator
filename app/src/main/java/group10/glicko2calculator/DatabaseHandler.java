@@ -43,6 +43,13 @@ class DatabaseHandler {
         return db.rawQuery(query, null);
     }
 
+    static Cursor getPlayers(String uID)
+    {
+        String query = "SELECT * FROM Players " +
+                "WHERE uID = '" + uID + "';";
+        return db.rawQuery(query, null);
+    }
+
     static boolean playerExists(String uID)
     {
         Cursor result = db.rawQuery(
@@ -67,6 +74,16 @@ class DatabaseHandler {
         cv.put("volatility", volatility);
 
         return db.insert("Players", null, cv);
+    }
+
+    static int updatePlayer(String uID, float rating, float deviation, float volatility)
+    {
+        ContentValues cv = new ContentValues();
+        cv.put("rating", rating);
+        cv.put("deviation", deviation);
+        cv.put("volatility", volatility);
+
+        return db.update("Players", cv, "uID = '"+ uID +"'", null);
     }
 
     static Cursor getGames()
