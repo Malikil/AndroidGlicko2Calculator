@@ -7,6 +7,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.ListView;
 
 public class GamesActivity extends AppCompatActivity {
 
@@ -17,14 +18,31 @@ public class GamesActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        ((ListView)findViewById(R.id.gamesList)).setAdapter(
+                new GamesAdapter(this, DatabaseHandler.getGames())
+        );
+
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view)
             {
-                startActivity(new Intent(GamesActivity.this, AddGameActivity.class));
+                startActivityForResult(
+                        new Intent(GamesActivity.this, AddGameActivity.class),
+                        0
+                );
             }
         });
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        if (resultCode == RESULT_OK)
+        {
+            ((GamesAdapter)
+                    ((ListView)findViewById(R.id.gamesList)).getAdapter()
+            ).updateGames(DatabaseHandler.getGames());
+        }
+    }
 }

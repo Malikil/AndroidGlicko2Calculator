@@ -1,5 +1,6 @@
 package group10.glicko2calculator;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
@@ -7,6 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 public class AddPlayerActivity extends AppCompatActivity
 {
@@ -22,7 +24,7 @@ public class AddPlayerActivity extends AppCompatActivity
                     volatilityEntry = findViewById(R.id.volatilityEntry);
 
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
-        float defaultRating = preferences.getFloat("Default Rating", 1500),
+        final float defaultRating = preferences.getFloat("Default Rating", 1500),
                 defaultDeviation = preferences.getFloat("Default Deviation", 350),
                 defaultVolatility = preferences.getFloat("Default Volatility", 0.06F);
 
@@ -34,13 +36,89 @@ public class AddPlayerActivity extends AppCompatActivity
             @Override
             public void onClick(View view)
             {
-                // TODO Add new player to database
+                // TODO Cleanup
+                String name = pName.getText().toString().trim();
+                if (name.isEmpty())
+                {
+                    Toast.makeText(
+                            AddPlayerActivity.this,
+                            "Please enter a player name.",
+                            Toast.LENGTH_SHORT
+                    ).show();
+                }
+                else
+                {
+                    float rating, deviation, volatility;
+                    if (!ratingEntry.getText().toString().isEmpty())
+                        try
+                        {
+                            rating = Float.parseFloat(ratingEntry.getText().toString());
+                        }
+                        catch (NumberFormatException nfe)
+                        {
+                            Toast.makeText(
+                                    AddPlayerActivity.this,
+                                    "Please enter a valid decimal number for Rating.",
+                                    Toast.LENGTH_SHORT
+                            ).show();
+                            return;
+                        }
+                    else
+                        rating = defaultRating;
+
+                    if (!deviationEntry.getText().toString().isEmpty())
+                        try
+                        {
+                            deviation = Float.parseFloat(deviationEntry.getText().toString());
+                        }
+                        catch (NumberFormatException nfe)
+                        {
+                            Toast.makeText(
+                                    AddPlayerActivity.this,
+                                    "Please enter a valid decimal number for Rating Deviation.",
+                                    Toast.LENGTH_SHORT
+                            ).show();
+                            return;
+                        }
+                    else
+                        deviation = defaultDeviation;
+
+                    if (!volatilityEntry.getText().toString().isEmpty())
+                        try
+                        {
+                            volatility = Float.parseFloat(volatilityEntry.getText().toString());
+                        }
+                        catch (NumberFormatException nfe)
+                        {
+                            Toast.makeText(
+                                    AddPlayerActivity.this,
+                                    "Please enter a valid decimal number for Volatility.",
+                                    Toast.LENGTH_SHORT
+                            ).show();
+                            return;
+                        }
+                    else
+                        volatility = defaultVolatility;
+
+                    if (DatabaseHandler.addPlayer(name, rating, deviation, volatility) == -1)
+                        Toast.makeText(
+                                AddPlayerActivity.this,
+                                "Failed to add player.\nDoes this player already exist?",
+                                Toast.LENGTH_SHORT
+                        ).show();
+                    else
+                    {
+                        setResult(RESULT_OK);
+                        finish();
+                    }
+                }
             }
         });
         ((Button)findViewById(R.id.cancelButton)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view)
             {
+                setResult(RESULT_CANCELED);
                 finish();
             }
         });

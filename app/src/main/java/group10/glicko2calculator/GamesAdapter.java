@@ -1,6 +1,7 @@
 package group10.glicko2calculator;
 
 import android.app.Activity;
+import android.database.Cursor;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,23 +15,25 @@ import java.util.ArrayList;
 public class GamesAdapter extends BaseAdapter
 {
     private Activity context;
-    private ArrayList<Result> list;
+    private Cursor cursor;
 
-    public GamesAdapter(Activity context, ArrayList<Result> list)
+    public GamesAdapter(Activity context, Cursor cursor)
     {
         this.context = context;
-        this.list = list;
+        this.cursor = cursor;
     }
 
     @Override
     public int getCount()
     {
-        return list.size();
+        return cursor.getCount();
     }
 
     @Override
-    public Object getItem(int i) {
-        return list.get(i);
+    public Object getItem(int i)
+    {
+        cursor.moveToPosition(i);
+        return cursor.getString(0);
     }
 
     @Override
@@ -46,15 +49,24 @@ public class GamesAdapter extends BaseAdapter
             LayoutInflater inflater = context.getLayoutInflater();
             view = inflater.inflate(R.layout.list_adapter_layout, null);
         }
+        cursor.moveToPosition(i);
 
-        Result game = list.get(i);
-        ((TextView)view.findViewById(R.id.column1)).setText(game.getWinner().getUid());
-        ((TextView)view.findViewById(R.id.column2)).setText(game.getLoser().getUid());
-        boolean isDraw = game.getScore(game.getLoser()) > 0;
+        ((TextView)view.findViewById(R.id.column1)).setText(cursor.getString(1));
+        ((TextView)view.findViewById(R.id.column2)).setText(cursor.getString(2));
+        boolean isDraw = cursor.getInt(3) > 0;
         ((TextView)view.findViewById(R.id.column3)).setText(isDraw
-                            ? game.getWinner().getUid()
-                            : "Draw");
+                            ? "Draw"
+                            : "");
 
         return view;
+    }
+
+    void updateGames(Cursor cursor)
+    {
+        if (this.cursor != null)
+            this.cursor.close();
+        if (cursor != null)
+            this.cursor = cursor;
+        notifyDataSetChanged();
     }
 }

@@ -20,7 +20,7 @@ public class SettingsActivity extends AppCompatActivity {
 
         final SharedPreferences preferences =
                 PreferenceManager.getDefaultSharedPreferences(this);
-        final float tau = preferences.getFloat("Default Tau", 0.75F),
+        final float tau = preferences.getFloat("System Tau", 0.75F),
                     rating = preferences.getFloat("Default Rating", 1500),
                     deviation = preferences.getFloat("Default Deviation", 350),
                     volatility = preferences.getFloat("Default Volatility", 0.06F);
@@ -47,9 +47,11 @@ public class SettingsActivity extends AppCompatActivity {
                           newVolatility = Float.parseFloat(volatilityText.getText().toString());
 
                     SharedPreferences.Editor editor = preferences.edit();
-                    editor.putFloat("Default Tau", newTau);
+                    editor.putFloat("System Tau", newTau);
                     // TODO Need to check if tau changed, then update the calculator accordingly
                     editor.putFloat("Default Rating", newRating);
+                    editor.putFloat("Default Deviation", newDeviation);
+                    editor.putFloat("Default Volatility", newVolatility);
                     editor.commit();
                     finish();
                 }
