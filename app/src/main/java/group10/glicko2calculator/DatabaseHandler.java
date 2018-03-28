@@ -2,10 +2,12 @@ package group10.glicko2calculator;
 import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.DatabaseErrorHandler;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 
 /**
@@ -76,6 +78,17 @@ class DatabaseHandler {
         return db.insert("Players", null, cv);
     }
 
+    static long addPlayerWithDefaults(String uID, Activity context)
+    {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+        return addPlayer(
+                uID,
+                preferences.getFloat("Default Rating", 1500),
+                preferences.getFloat("Default Deviation", 350),
+                preferences.getFloat("Default Volatility", 0.06F)
+        );
+    }
+
     static int updatePlayer(String uID, float rating, float deviation, float volatility)
     {
         ContentValues cv = new ContentValues();
@@ -83,7 +96,7 @@ class DatabaseHandler {
         cv.put("deviation", deviation);
         cv.put("volatility", volatility);
 
-        return db.update("Players", cv, "uID = '"+ uID +"'", null);
+        return db.update("Players", cv, "uID = ?", new String[] { uID });
     }
 
     static Cursor getGames()
