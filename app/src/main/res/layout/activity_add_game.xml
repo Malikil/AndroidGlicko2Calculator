@@ -14,21 +14,22 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <EditText
+
+        <AutoCompleteTextView
             android:id="@+id/player1Entry"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
             android:ems="10"
             android:hint="@string/player1Label"
-            android:inputType="textPersonName"
-            android:layout_centerHorizontal="true" />
+            android:inputType="textPersonName" />
 
-        <EditText
+        <AutoCompleteTextView
             android:id="@+id/player2Entry"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
             android:layout_below="@id/player1Entry"
+            android:layout_centerHorizontal="true"
             android:layout_marginTop="16dp"
             android:ems="10"
             android:hint="@string/player2Label"
@@ -38,18 +39,18 @@
             android:id="@+id/drawCheck"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/player2Entry"
-            android:layout_marginTop="16dp"
             android:layout_alignStart="@id/player1Entry"
+            android:layout_below="@id/player2Entry"
             android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
             android:text="@string/isDrawText" />
 
         <Button
             android:id="@+id/addGameButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/drawCheck"
             android:layout_alignStart="@id/player1Entry"
+            android:layout_below="@id/drawCheck"
             android:layout_marginTop="32dp"
             android:text="@string/saveText" />
 
@@ -57,9 +58,10 @@
             android:id="@+id/cancelButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignTop="@id/addGameButton"
             android:layout_alignEnd="@id/player1Entry"
+            android:layout_alignTop="@id/addGameButton"
             android:text="@string/cancelText" />
 
     </RelativeLayout>
+
 </android.support.constraint.ConstraintLayout>

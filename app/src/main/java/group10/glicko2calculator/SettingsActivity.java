@@ -9,6 +9,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import org.goochjs.glicko2.RatingCalculator;
+
 import java.util.Locale;
 
 public class SettingsActivity extends AppCompatActivity {
@@ -48,7 +50,6 @@ public class SettingsActivity extends AppCompatActivity {
 
                     SharedPreferences.Editor editor = preferences.edit();
                     editor.putFloat("System Tau", newTau);
-                    // TODO Need to check if tau changed, then update the calculator accordingly
                     editor.putFloat("Default Rating", newRating);
                     editor.putFloat("Default Deviation", newDeviation);
                     editor.putFloat("Default Volatility", newVolatility);
@@ -70,6 +71,15 @@ public class SettingsActivity extends AppCompatActivity {
             public void onClick(View view)
             {
                 finish();
+            }
+        });
+        ((Button)findViewById(R.id.btnReset)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                tauText.setText(Float.toString(0.75F));
+                ratingText.setText(Float.toString(1500));
+                deviationText.setText(Float.toString(350));
+                volatilityText.setText(Float.toString(0.06F));
             }
         });
     }
