@@ -48,7 +48,6 @@ public class SettingsActivity extends AppCompatActivity {
 
                     SharedPreferences.Editor editor = preferences.edit();
                     editor.putFloat("System Tau", newTau);
-                    // TODO Need to check if tau changed, then update the calculator accordingly
                     editor.putFloat("Default Rating", newRating);
                     editor.putFloat("Default Deviation", newDeviation);
                     editor.putFloat("Default Volatility", newVolatility);

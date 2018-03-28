@@ -105,7 +105,8 @@ public class AddPlayerActivity extends AppCompatActivity
                     else
                         volatility = defaultVolatility;
 
-                    if (DatabaseHandler.addPlayer(name, rating, deviation, volatility) == -1)
+                    if (new DatabaseHandler(AddPlayerActivity.this)
+                            .addPlayer(name, rating, deviation, volatility) == -1)
                         Toast.makeText(
                                 AddPlayerActivity.this,
                                 "Failed to add player.\nDoes this player already exist?",

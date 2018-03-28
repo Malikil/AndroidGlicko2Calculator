@@ -24,9 +24,11 @@ public class PlayersActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         putInToolbar(toolbar);
 
+        DatabaseHandler db = new DatabaseHandler(this);
+
         // Load players from database into adapter
         ((ListView)findViewById(R.id.playerList)).setAdapter(
-                new PlayersAdapter(this, DatabaseHandler.getPlayers())
+                new PlayersAdapter(this, db.getAllPlayers("uID", true))
         );
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -67,7 +69,9 @@ public class PlayersActivity extends AppCompatActivity {
         {
             ((PlayersAdapter)
                     ((ListView)findViewById(R.id.playerList)).getAdapter()
-            ).updatePlayers(DatabaseHandler.getPlayers());
+            ).updatePlayers(
+                    new DatabaseHandler(this).getAllPlayers("uID", true)
+            );
         }
     }
 }

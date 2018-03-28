@@ -21,9 +21,10 @@ public class GamesActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         putInToolbar(toolbar);
+        DatabaseHandler db = new DatabaseHandler(this);
 
         ((ListView)findViewById(R.id.gamesList)).setAdapter(
-                new GamesAdapter(this, DatabaseHandler.getGames())
+                new GamesAdapter(this, db.getGames())
         );
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -62,7 +63,7 @@ public class GamesActivity extends AppCompatActivity {
         {
             ((GamesAdapter)
                     ((ListView)findViewById(R.id.gamesList)).getAdapter()
-            ).updateGames(DatabaseHandler.getGames());
+            ).updateGames(new DatabaseHandler(this).getGames());
         }
     }
 }
