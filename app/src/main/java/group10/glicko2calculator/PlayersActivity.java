@@ -21,8 +21,8 @@ public class PlayersActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_players);
         Toolbar toolbar = findViewById(R.id.toolbar);
-        putInToolbar(toolbar);
         setSupportActionBar(toolbar);
+        putInToolbar(toolbar);
 
         // Load players from database into adapter
         ((ListView)findViewById(R.id.playerList)).setAdapter(
