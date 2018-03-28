@@ -1,8 +1,10 @@
 package group10.glicko2calculator;
 
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.preference.PreferenceManager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -15,6 +17,8 @@ import org.goochjs.glicko2.Rating;
 import org.goochjs.glicko2.RatingCalculator;
 import org.goochjs.glicko2.RatingPeriodResults;
 
+import java.util.Locale;
+
 public class AddGameActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -22,7 +26,7 @@ public class AddGameActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_game);
 
-        // Set keyboard suggestions to existing players
+        // TODO Set keyboard suggestions to existing players here
 
         ((Button)findViewById(R.id.addGameButton)).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -33,29 +37,16 @@ public class AddGameActivity extends AppCompatActivity {
                 boolean draw = ((CheckBox)findViewById(R.id.drawCheck)).isChecked();
 
                 // Check if the players are in the database
-                if (DatabaseHandler.playerExists(winner))
+                if (!DatabaseHandler.playerExists(winner))
                 {
-                    // TODO
+                    if (!DatabaseHandler.playerExists(loser))
+                        askForPlayer(winner, loser); // Neither winner nor loser exist
+                    else
+                        askForPlayer(winner, null); // Only winner doesn't exist
                 }
-                else
-                {
-                    // Winner doesn't exist, ask to create
-
-                    return;
-                }
-
-                if (DatabaseHandler.playerExists(loser))
-                {
-                    // TODO
-                }
-                else
-                {
-                    // Loser doesn't exist, ask to create
-
-                    return;
-                }
-
-                if (DatabaseHandler.addGame(winner, loser, draw) == -1)
+                else if (!DatabaseHandler.playerExists(loser))
+                    askForPlayer(loser, null); // Only loser doesn't exist
+                else if (DatabaseHandler.addGame(winner, loser, draw) == -1)
                     Toast.makeText(
                             AddGameActivity.this,
                             "Failed to add game.\nHave you added the same player twice?",
@@ -118,6 +109,50 @@ public class AddGameActivity extends AppCompatActivity {
                     setResult(RESULT_OK);
                     finish();
                 }
+            }
+
+            /**
+             * Method in add game button click listener to make adding players to the database on
+             * the fly easier
+             * @param uID User ID
+             * @param uID2 Second user ID, NULL if only one player to add
+             */
+            private void askForPlayer(final String uID, final String uID2)
+            {
+                new AlertDialog.Builder(AddGameActivity.this)
+                        .setTitle("Create Player")
+                        .setMessage(String.format(
+                                Locale.getDefault(),
+                                "There is no player named %s, would you like to create them?",
+                                uID
+                        ))
+                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i)
+                            {
+                                if (DatabaseHandler.addPlayerWithDefaults(
+                                        uID,
+                                        AddGameActivity.this
+                                ) == -1)
+                                    Toast.makeText(
+                                            AddGameActivity.this,
+                                            String.format(
+                                                    Locale.getDefault(),
+                                                    "Could not create an entry for %s. Please" +
+                                                            " try adding them through the players" +
+                                                            "screen, then create this game again.",
+                                                    uID
+                                            ),
+                                            Toast.LENGTH_SHORT
+                                    ).show();
+                                if (uID2 != null)
+                                    askForPlayer(uID2, null);
+                                else
+                                    ((Button)findViewById(R.id.addGameButton)).performClick();
+                            }
+                        })
+                        .setNegativeButton(android.R.string.no, null)
+                        .show();
             }
         });
 
