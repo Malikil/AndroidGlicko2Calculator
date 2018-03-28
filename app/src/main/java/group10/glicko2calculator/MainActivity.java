@@ -12,7 +12,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        DatabaseHandler.openDB(this, "ExampleDB");
+        DatabaseHandler.openDB(this, "GlickoDB");
         setContentView(R.layout.activity_main);
 
         final Button infoButton = findViewById(R.id.viewInfoButton),
