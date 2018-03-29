@@ -49,4 +49,6 @@
     <string name="defRatingText">Default Rating</string>
     <string name="defDeviationText">Default Rating Deviation</string>
     <string name="defVolatilityText">Default Volatility</string>
+    <string name="title_activity_player_info">PlayerInfoActivity</string>
+    <string name="resetDefaultsText">Reset to Default Values</string>
 </resources>

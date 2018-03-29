@@ -36,6 +36,10 @@
             android:name=".GamesActivity"
             android:label="@string/title_activity_games"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".PlayerInfoActivity"
+            android:label="@string/title_activity_player_info"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>
