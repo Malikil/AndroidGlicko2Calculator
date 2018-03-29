@@ -16,7 +16,7 @@ class DatabaseHandler extends SQLiteOpenHelper
     private static String DATABASE_NAME = "GlickoDB";
     private static int DATABASE_VERSION = 1;
 
-    public DatabaseHandler(Context context)
+    DatabaseHandler(Context context)
     {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
@@ -24,10 +24,10 @@ class DatabaseHandler extends SQLiteOpenHelper
     Cursor getAllPlayers(String sortCol, boolean ascending)
     {
         String query = "SELECT * FROM Players " +
-                "ORDER BY ? %s;";
+                "ORDER BY %s %s;";
         return db.rawQuery(
-                String.format(query, ascending ? "ASC" : "DESC"),
-                new String[] { sortCol }
+                String.format(query, sortCol, ascending ? "ASC" : "DESC"),
+                null //new String[] { sortCol }
         );
     }
 
