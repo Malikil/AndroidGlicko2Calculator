@@ -25,6 +25,7 @@ public class AddGameActivity extends AppCompatActivity {
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_game);
+        final DatabaseHandler db = new DatabaseHandler(this);
 
         // TODO Set keyboard suggestions to existing players here
 
@@ -37,16 +38,16 @@ public class AddGameActivity extends AppCompatActivity {
                 boolean draw = ((CheckBox)findViewById(R.id.drawCheck)).isChecked();
 
                 // Check if the players are in the database
-                if (!DatabaseHandler.playerExists(winner))
+                if (!db.playerExists(winner))
                 {
-                    if (!DatabaseHandler.playerExists(loser))
+                    if (!db.playerExists(loser))
                         askForPlayer(winner, loser); // Neither winner nor loser exist
                     else
                         askForPlayer(winner, null); // Only winner doesn't exist
                 }
-                else if (!DatabaseHandler.playerExists(loser))
+                else if (!db.playerExists(loser))
                     askForPlayer(loser, null); // Only loser doesn't exist
-                else if (DatabaseHandler.addGame(winner, loser, draw) == -1)
+                else if (db.addGame(winner, loser, draw) == -1)
                     Toast.makeText(
                             AddGameActivity.this,
                             "Failed to add game.\nHave you added the same player twice?",
@@ -55,7 +56,7 @@ public class AddGameActivity extends AppCompatActivity {
                 {
                     // TODO For now, add games to the calculator here
                     // Create player objects using database information
-                    Cursor player = DatabaseHandler.getPlayers(winner);
+                    Cursor player = db.getPlayer(winner);
                     player.moveToFirst();
                     Rating rWinner = new Rating(
                             winner,
@@ -65,7 +66,7 @@ public class AddGameActivity extends AppCompatActivity {
                             player.getFloat(3)
                     );
 
-                    player = DatabaseHandler.getPlayers(loser);
+                    player = db.getPlayer(loser);
                     player.moveToFirst();
                     Rating rLoser = new Rating(
                             loser,
@@ -92,14 +93,14 @@ public class AddGameActivity extends AppCompatActivity {
                     calculator.updateRatings(results);
 
                     // Update database with new results
-                    DatabaseHandler.updatePlayer(
+                    db.updatePlayer(
                             winner,
                             (float)rWinner.getRating(),
                             (float)rWinner.getRatingDeviation(),
                             (float)rWinner.getVolatility()
                     );
 
-                    DatabaseHandler.updatePlayer(
+                    db.updatePlayer(
                             loser,
                             (float)rLoser.getRating(),
                             (float)rLoser.getRatingDeviation(),
@@ -130,10 +131,8 @@ public class AddGameActivity extends AppCompatActivity {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i)
                             {
-                                if (DatabaseHandler.addPlayerWithDefaults(
-                                        uID,
-                                        AddGameActivity.this
-                                ) == -1)
+                                if (new DatabaseHandler(AddGameActivity.this)
+                                        .addPlayerWithDefaults(uID, AddGameActivity.this) == -1)
                                     Toast.makeText(
                                             AddGameActivity.this,
                                             String.format(
