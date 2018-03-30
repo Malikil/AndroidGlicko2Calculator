@@ -37,8 +37,10 @@ public class GamesAdapter extends BaseAdapter
     }
 
     @Override
-    public long getItemId(int i) {
-        return i;
+    public long getItemId(int i)
+    {
+        cursor.moveToPosition(i);
+        return cursor.getInt(0);
     }
 
     @Override

@@ -44,7 +44,7 @@ public class PlayersActivity extends AppCompatActivity
                 new PlayersAdapter(this, db.getAllPlayers(sort, asc))
         );
 
-        // Action listeners for column headers
+        // Action listeners for sorting on column headers
         findViewById(R.id.playerHeader).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view)
@@ -101,23 +101,6 @@ public class PlayersActivity extends AppCompatActivity
         });
     }
 
-    /*@Override
-    protected void onRestoreInstanceState(Bundle savedInstanceState)
-    {
-        sort = savedInstanceState.getString("Current Sort", "uID");
-        asc = savedInstanceState.getBoolean("Sort Type", asc);
-
-        asc = !asc;
-
-        ((PlayersAdapter)
-                ((ListView)findViewById(R.id.playerList)).getAdapter()
-        ).updatePlayers(
-                new DatabaseHandler(this).getAllPlayers(sort, asc)
-        );
-
-        super.onRestoreInstanceState(savedInstanceState);
-    }*/
-
     @Override
     protected void onSaveInstanceState(Bundle outState)
     {
@@ -148,7 +131,10 @@ public class PlayersActivity extends AppCompatActivity
     {
         //super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK)
+        {
             updatePlayerList();
+            Toast.makeText(this, "Added Player", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void updatePlayerList()

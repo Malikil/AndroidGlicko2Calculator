@@ -91,6 +91,16 @@ class DatabaseHandler extends SQLiteOpenHelper
         return db.rawQuery(query, null);
     }
 
+    Cursor getGames(String sortCol, boolean ascending)
+    {
+        String query = "SELECT * FROM Games " +
+                "ORDER BY %s %s;";
+        return db.rawQuery(
+                String.format(query, sortCol, ascending ? "ASC" : "DESC"),
+                null //new String[] { sortCol }
+        );
+    }
+
     long addGame(String winner, String loser, boolean isDraw)
     {
         ContentValues cv = new ContentValues();
@@ -99,6 +109,25 @@ class DatabaseHandler extends SQLiteOpenHelper
         cv.put("isDraw", isDraw);
 
         return db.insert("Games", null, cv);
+    }
+
+
+    Cursor getGameByID(String gameID)
+    {
+        String query = "SELECT * FROM Games " +
+                "WHERE gameID = ?;";
+        Cursor c = db.rawQuery(query, new String[] { gameID });
+        c.moveToFirst();
+        return c;
+    }
+
+    int deleteGame(int gameID)
+    {
+        return db.delete(
+                "Games",
+                "gameID = ?",
+                new String[] { Integer.toString(gameID) }
+        );
     }
 
     @Override
