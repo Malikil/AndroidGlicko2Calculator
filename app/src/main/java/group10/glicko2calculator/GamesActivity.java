@@ -49,7 +49,8 @@ public class GamesActivity extends AppCompatActivity
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, final long l)
             {
-                String deleteMessage = "Do you really want to delete the game between %s and %s?";
+                String deleteMessage = "Do you really want to delete the game between %s and %s?\n" +
+                        "The players' ratings will not be affected.";
                 Cursor c = db.getGameByID(Long.toString(l));
                 String winner = c.getString(1);
                 String loser = c.getString(2);
