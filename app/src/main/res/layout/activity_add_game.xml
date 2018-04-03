@@ -7,6 +7,7 @@
     tools:context="group10.glicko2calculator.AddGameActivity">
 
     <RelativeLayout
+        android:id="@+id/container"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -63,5 +64,16 @@
             android:text="@string/cancelText" />
 
     </RelativeLayout>
+
+    <ImageButton
+        android:id="@+id/imageButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@android:drawable/ic_menu_revert"
+        android:contentDescription="@string/switchDesc"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="36dp"
+        app:layout_constraintTop_toTopOf="@id/container"
+        app:layout_constraintStart_toEndOf="@id/container" />
 
 </android.support.constraint.ConstraintLayout>

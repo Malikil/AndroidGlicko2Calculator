@@ -44,7 +44,8 @@
                 android:id="@+id/ratingLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/ratingText" />
+                android:text="@string/ratingText"
+                android:labelFor="@id/ratingEntry" />
 
             <EditText
                 android:id="@+id/ratingEntry"
@@ -62,7 +63,8 @@
                 android:id="@+id/deviationLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/deviationText" />
+                android:text="@string/deviationText"
+                android:labelFor="@id/deviationEntry" />
 
             <EditText
                 android:id="@+id/deviationEntry"
@@ -80,7 +82,8 @@
                 android:id="@+id/volatilityLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/volatilityText" />
+                android:text="@string/volatilityText"
+                android:labelFor="@id/volatilityEntry" />
 
             <EditText
                 android:id="@+id/volatilityEntry"
