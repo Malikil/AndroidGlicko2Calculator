@@ -31,6 +31,15 @@
     <string name="deviationText">Rating Deviation</string>
     <string name="volatilityText">Volatility</string>
 
+    <!-- Player Info -->
+    <string name="title_activity_player_info">Player Info</string>
+    <string name="deletePlayerText">Delete Player</string>
+    <string name="applyText">Apply Changes</string>
+    <string name="createGameText">Create Game</string>
+    <string name="totalGamesText">Total Games</string>
+    <string name="wonGamesText">Games Won</string>
+    <string name="winRateText">Win Rate</string>
+
     <!-- Games Screen -->
     <string name="title_activity_games">All Games</string>
     <string name="player1Label">Winner</string>
@@ -42,6 +51,7 @@
     <string name="p1WinButton">Player 1 Win</string>
     <string name="p2WinButton">Player 2 Win</string>
     <string name="tieButton">Tie</string>
+    <string name="switchDesc">Switch Players</string>
 
     <!-- Settings Screen -->
     <string name="title_activity_settings">Calculator Settings</string>
@@ -49,6 +59,5 @@
     <string name="defRatingText">Default Rating</string>
     <string name="defDeviationText">Default Rating Deviation</string>
     <string name="defVolatilityText">Default Volatility</string>
-    <string name="title_activity_player_info">PlayerInfoActivity</string>
     <string name="resetDefaultsText">Reset to Default Values</string>
 </resources>

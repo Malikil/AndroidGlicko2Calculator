@@ -12,6 +12,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -40,9 +41,19 @@ public class PlayersActivity extends AppCompatActivity
         else { sort = "uID"; asc = true; }
 
         // Load players from database into adapter
-        ((ListView)findViewById(R.id.playerList)).setAdapter(
-                new PlayersAdapter(this, db.getAllPlayers(sort, asc))
-        );
+        final ListView playerList = findViewById(R.id.playerList);
+        playerList.setAdapter(new PlayersAdapter(this, db.getAllPlayers(sort, asc)));
+        playerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l)
+            {
+                Intent infoIntent = new Intent(PlayersActivity.this, PlayerInfoActivity.class);
+                // Need to find which player was clicked
+                String player = playerList.getAdapter().getItem(i).toString();
+                infoIntent.putExtra("Player Name", player);
+                startActivity(infoIntent);
+            }
+        });
 
         // Action listeners for sorting on column headers
         findViewById(R.id.playerHeader).setOnClickListener(new View.OnClickListener() {
