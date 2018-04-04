@@ -1,6 +1,7 @@
 package group10.glicko2calculator;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.preference.PreferenceManager;
@@ -41,7 +42,11 @@ public class AddGameActivity extends AppCompatActivity {
         editTxtPlayer1.setAdapter(adapter);
         editTxtPlayer2.setAdapter(adapter);
 
-        // TODO Set keyboard suggestions to existing players here
+        // Get the player from the intent, if present
+        Intent intent = this.getIntent();
+        String initPlayer = intent.getStringExtra("Init Player");
+        if (initPlayer != null)
+            ((EditText)findViewById(R.id.player1Entry)).setText(initPlayer);
 
         ((Button)findViewById(R.id.addGameButton)).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -201,7 +206,7 @@ public class AddGameActivity extends AppCompatActivity {
         }
         catch (Exception ex)
         {
-            Toast.makeText(this, "AutoComplete was not able to index players", Toast.LENGTH_SHORT);
+            Toast.makeText(this, "AutoComplete was not able to index players", Toast.LENGTH_SHORT).show();
         }
     }
 }
