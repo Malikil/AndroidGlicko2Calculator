@@ -3,7 +3,6 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/AndroidGlicko2Calculator.iml" filepath="$PROJECT_DIR$/AndroidGlicko2Calculator.iml" />
-      <module fileurl="file://C:\Users\Andreja\Dropbox\Android Project\AndroidGlicko2Calculator\.idea\AndroidGlicko2Calculator.iml" filepath="C:\Users\Andreja\Dropbox\Android Project\AndroidGlicko2Calculator\.idea\AndroidGlicko2Calculator.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>

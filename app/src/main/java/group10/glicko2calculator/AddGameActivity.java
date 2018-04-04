@@ -59,6 +59,13 @@ public class AddGameActivity extends AppCompatActivity {
                     else
                         askForPlayer(winner, null); // Only winner doesn't exist
                 }
+                else if(winner.equals(loser))
+                {
+                    Toast.makeText(
+                            AddGameActivity.this,
+                            "Have you added the same player twice?",
+                            Toast.LENGTH_SHORT).show();
+                }
                 else if (!db.playerExists(loser))
                     askForPlayer(loser, null); // Only loser doesn't exist
                 else if (db.addGame(winner, loser, draw) == -1)
@@ -66,6 +73,7 @@ public class AddGameActivity extends AppCompatActivity {
                             AddGameActivity.this,
                             "Failed to add game.\nHave you added the same player twice?",
                             Toast.LENGTH_SHORT).show();
+
                 else
                 {
                     // TODO For now, add games to the calculator here
