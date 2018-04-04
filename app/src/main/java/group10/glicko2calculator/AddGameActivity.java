@@ -9,6 +9,8 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -18,15 +20,26 @@ import org.goochjs.glicko2.Rating;
 import org.goochjs.glicko2.RatingCalculator;
 import org.goochjs.glicko2.RatingPeriodResults;
 
+import java.util.ArrayList;
 import java.util.Locale;
 
 public class AddGameActivity extends AppCompatActivity {
+    ArrayList<String> players = new ArrayList<String>();
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_add_game);
         final DatabaseHandler db = new DatabaseHandler(this);
+        setAutocompleteData(db);
+        AutoCompleteTextView editTxtPlayer1 = findViewById(R.id.player1Entry);
+        AutoCompleteTextView editTxtPlayer2 = findViewById(R.id.player2Entry);
+        editTxtPlayer1.setThreshold(1);
+        editTxtPlayer2.setThreshold(1);
+        ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.select_dialog_item ,players);
+        editTxtPlayer1.setAdapter(adapter);
+        editTxtPlayer2.setAdapter(adapter);
 
         // TODO Set keyboard suggestions to existing players here
 
@@ -164,5 +177,23 @@ public class AddGameActivity extends AppCompatActivity {
                 finish();
             }
         });
+    }
+
+    public void setAutocompleteData(DatabaseHandler db)
+    {
+        try {
+            Cursor playerList = db.getAllPlayers("uID", true);
+            if (playerList != null) {
+                playerList.moveToFirst();
+                do {
+                    players.add(playerList.getString(0));
+                } while (playerList.moveToNext());
+                playerList.close();
+            }
+        }
+        catch (Exception ex)
+        {
+            Toast.makeText(this, "AutoComplete was not able to index players", Toast.LENGTH_SHORT);
+        }
     }
 }
