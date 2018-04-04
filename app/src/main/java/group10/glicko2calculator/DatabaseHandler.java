@@ -38,6 +38,27 @@ class DatabaseHandler extends SQLiteOpenHelper
         return db.rawQuery(query, new String[] { uID });
     }
 
+    Cursor getPlayerWithGameCount(String uID)
+    {
+        String query = "SELECT Players.*, SUM(CASE WHEN winner = uID AND isDraw = 0 THEN 1 ELSE 0 END) AS gamesWon, " +
+                "COUNT(gameID) AS totalGames " +
+                "FROM Games, Players " +
+                "WHERE (uID = winner OR uID = loser) " +
+                "AND uID = ?" +
+                "GROUP BY uID, rating, deviation, volatility;";
+        Cursor results = db.rawQuery(query, new String[] { uID });
+        if (results.getCount() == 0)
+        {
+            results.close();
+            query = "SELECT Players.*, 0 AS gamesWon, 0 AS totalGames " +
+                    "FROM Players " +
+                    "WHERE uID = ?;";
+            return db.rawQuery(query, new String[] { uID });
+        }
+        else
+            return results;
+    }
+
     boolean playerExists(String uID)
     {
         Cursor result = db.rawQuery(

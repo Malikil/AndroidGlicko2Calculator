@@ -33,6 +33,7 @@
 
     <!-- Player Info -->
     <string name="title_activity_player_info">Player Info</string>
+    <string name="deletePlayerText">Delete Player</string>
     <string name="applyText">Apply Changes</string>
     <string name="createGameText">Create Game</string>
     <string name="totalGamesText">Total Games</string>

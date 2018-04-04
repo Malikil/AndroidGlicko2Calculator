@@ -16,7 +16,6 @@
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
-        android:text="<placeholder>"
         android:textSize="24sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -120,21 +119,24 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="4dp"
-                android:layout_marginEnd="4dp" />
+                android:layout_marginEnd="4dp"
+                android:gravity="center" />
 
             <TextView
                 android:id="@+id/totalGamesDisplay"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="4dp"
-                android:layout_marginEnd="4dp" />
+                android:layout_marginEnd="4dp"
+                android:gravity="center" />
 
             <TextView
                 android:id="@+id/winRateDisplay"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="4dp"
-                android:layout_marginEnd="4dp" />
+                android:layout_marginEnd="4dp"
+                android:gravity="center" />
         </TableRow>
 
         <TableRow
@@ -173,18 +175,33 @@
     </TableLayout>
 
     <Button
+        android:id="@+id/deleteButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="4dp"
+        android:layout_marginBottom="8dp"
+        android:text="@string/deletePlayerText"
+        app:layout_constraintTop_toBottomOf="@id/gameCountTable"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/saveButton"
+        app:layout_constraintVertical_bias="0.333"/>
+
+    <Button
         android:id="@+id/saveButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
+        android:layout_marginEnd="4dp"
+        android:layout_marginStart="4dp"
         android:layout_marginTop="8dp"
         android:text="@string/applyText"
         app:layout_constraintTop_toBottomOf="@id/gameCountTable"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/makeGameButton"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@id/deleteButton"
         app:layout_constraintVertical_bias="0.333" />
 
     <Button
@@ -193,7 +210,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="4dp"
         android:layout_marginTop="8dp"
         android:text="@string/createGameText"
         app:layout_constraintTop_toBottomOf="@id/gameCountTable"
