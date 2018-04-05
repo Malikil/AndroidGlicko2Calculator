@@ -8,12 +8,14 @@ import android.provider.UserDictionary;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import org.goochjs.glicko2.Rating;
@@ -33,13 +35,26 @@ public class AddGameActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_game);
         final DatabaseHandler db = new DatabaseHandler(this);
         setAutocompleteData(db);
-        AutoCompleteTextView editTxtPlayer1 = findViewById(R.id.player1Entry);
-        AutoCompleteTextView editTxtPlayer2 = findViewById(R.id.player2Entry);
+        final AutoCompleteTextView editTxtPlayer1 = findViewById(R.id.player1Entry);
+        final AutoCompleteTextView editTxtPlayer2 = findViewById(R.id.player2Entry);
         editTxtPlayer1.setThreshold(1);
         editTxtPlayer2.setThreshold(1);
         ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.select_dialog_item ,players);
         editTxtPlayer1.setAdapter(adapter);
         editTxtPlayer2.setAdapter(adapter);
+        
+
+        ImageButton flipButton = (ImageButton)findViewById(R.id.swapPlayersButton);
+        flipButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String text1 = editTxtPlayer1.getText().toString();
+                editTxtPlayer1.setText(editTxtPlayer2.getText());
+                editTxtPlayer2.setText(text1);
+            }
+        });
+
+
 
         // TODO Set keyboard suggestions to existing players here
 
@@ -51,31 +66,43 @@ public class AddGameActivity extends AppCompatActivity {
                         loser = ((EditText)findViewById(R.id.player2Entry)).getText().toString().trim();
                 boolean draw = ((CheckBox)findViewById(R.id.drawCheck)).isChecked();
 
+
+                if(winner.length() > 32)
+                {
+                    Toast.makeText(
+                            AddGameActivity.this,
+                            "Winner name too big, must be less than 32.",
+                            Toast.LENGTH_SHORT).show();
+                }
+                else if(loser.length() > 32)
+                {
+                    Toast.makeText(
+                            AddGameActivity.this,
+                            "Loser name too big, must be less than 32.",
+                            Toast.LENGTH_SHORT).show();
+                }
+                else if(winner.equals(loser))
+                {
+                    Toast.makeText(
+                            AddGameActivity.this,
+                            "Please select two different players.",
+                            Toast.LENGTH_SHORT).show();
+                }
                 // Check if the players are in the database
-                if (!db.playerExists(winner))
+                else if (!db.playerExists(winner))
                 {
                     if (!db.playerExists(loser))
                         askForPlayer(winner, loser); // Neither winner nor loser exist
                     else
                         askForPlayer(winner, null); // Only winner doesn't exist
                 }
-                else if(winner.equals(loser))
-                {
-                    Toast.makeText(
-                            AddGameActivity.this,
-                            "Have you added the same player twice?",
-                            Toast.LENGTH_SHORT).show();
-                }
+
+
                 else if (!db.playerExists(loser))
                     askForPlayer(loser, null); // Only loser doesn't exist
-                else if (db.addGame(winner, loser, draw) == -1)
-                    Toast.makeText(
-                            AddGameActivity.this,
-                            "Failed to add game.\nHave you added the same player twice?",
-                            Toast.LENGTH_SHORT).show();
-
                 else
                 {
+                    db.addGame(winner, loser, draw);
                     // TODO For now, add games to the calculator here
                     // Create player objects using database information
                     Cursor player = db.getPlayer(winner);
