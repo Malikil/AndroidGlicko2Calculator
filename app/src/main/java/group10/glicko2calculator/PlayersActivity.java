@@ -51,7 +51,7 @@ public class PlayersActivity extends AppCompatActivity
                 // Need to find which player was clicked
                 String player = playerList.getAdapter().getItem(i).toString();
                 infoIntent.putExtra("Player Name", player);
-                startActivity(infoIntent);
+                startActivityForResult(infoIntent, 0);
             }
         });
 
@@ -106,7 +106,7 @@ public class PlayersActivity extends AppCompatActivity
             {
                 startActivityForResult(
                         new Intent(PlayersActivity.this, AddPlayerActivity.class),
-                        0
+                        1
                 );
             }
         });
@@ -144,7 +144,8 @@ public class PlayersActivity extends AppCompatActivity
         if (resultCode == RESULT_OK)
         {
             updatePlayerList();
-            Toast.makeText(this, "Added Player", Toast.LENGTH_SHORT).show();
+            if (requestCode == 1)
+                Toast.makeText(this, "Added Player", Toast.LENGTH_SHORT).show();
         }
     }
 

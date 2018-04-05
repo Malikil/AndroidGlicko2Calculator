@@ -103,7 +103,18 @@ class DatabaseHandler extends SQLiteOpenHelper
         cv.put("deviation", deviation);
         cv.put("volatility", volatility);
 
+        return updatePlayer(uID, cv);
+    }
+
+    int updatePlayer(String uID, ContentValues cv)
+    {
         return db.update("Players", cv, "uID = ?", new String[] { uID });
+    }
+
+    int deletePlayer(String uID)
+    {
+        int deletedGames = db.delete("Games", "winner = ? OR loser = ?", new String[] { uID, uID });
+        return db.delete("Players", "uID = ?", new String[] { uID }) + deletedGames;
     }
 
     Cursor getGames()
