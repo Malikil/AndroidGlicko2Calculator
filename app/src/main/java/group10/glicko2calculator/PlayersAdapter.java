@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import org.goochjs.glicko2.Rating;
 
+import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Locale;
@@ -58,8 +59,8 @@ public class PlayersAdapter extends BaseAdapter
         // Use a number formatter to display numbers
         NumberFormat format = NumberFormat.getInstance(Locale.getDefault());
         ((TextView)view.findViewById(R.id.column1)).setText(cursor.getString(0));
-        ((TextView)view.findViewById(R.id.column2)).setText(format.format(cursor.getFloat(1)));
-        ((TextView)view.findViewById(R.id.column3)).setText(format.format(cursor.getFloat(2)));
+        ((TextView)view.findViewById(R.id.column2)).setText(String.format("%.0f", cursor.getFloat(1)));
+        ((TextView)view.findViewById(R.id.column3)).setText(String.format("%.1f", cursor.getFloat(2))); // TODO
 
         return view;
     }

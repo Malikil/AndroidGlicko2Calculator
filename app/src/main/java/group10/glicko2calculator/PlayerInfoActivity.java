@@ -21,7 +21,7 @@ import java.util.Locale;
 
 public class PlayerInfoActivity extends AppCompatActivity
 {
-    private final int FLOATING_EQUALITY = 1;
+    private final int DOUBLE_EQUALITY = 2;
     private float initRating, initDeviation;
     private double initVolatility;
 
@@ -61,11 +61,11 @@ public class PlayerInfoActivity extends AppCompatActivity
                 double newVolatility = Double.parseDouble(volatilityEntry.getText().toString());
                 // Check if values are different
                 ContentValues cv = new ContentValues();
-                if (Math.abs(initRating - newRating) > Float.MIN_NORMAL * FLOATING_EQUALITY)
+                if (Math.abs(initRating - newRating) > Float.MIN_NORMAL)
                     cv.put("rating", newRating);
-                if (Math.abs(initDeviation - newDeviation) > Float.MIN_NORMAL * FLOATING_EQUALITY)
+                if (Math.abs(initDeviation - newDeviation) > Float.MIN_NORMAL)
                     cv.put("deviation", newDeviation);
-                if (Math.abs(initVolatility - newVolatility) > Float.MIN_NORMAL * FLOATING_EQUALITY)
+                if (Math.abs(initVolatility - newVolatility) > Double.MIN_NORMAL * DOUBLE_EQUALITY)
                     cv.put("volatility", newVolatility);
                 // Push values to database
                 if (cv.size() > 0)
@@ -99,6 +99,7 @@ public class PlayerInfoActivity extends AppCompatActivity
                             public void onClick(DialogInterface dialogInterface, int i)
                             {
                                 db.deletePlayer(pname);
+                                setResult(RESULT_OK);
                                 finish();
                             }
                         })

@@ -16,7 +16,9 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import java.text.NumberFormat;
 import java.util.List;
+import java.util.Locale;
 
 public class PlayersActivity extends AppCompatActivity
 {
