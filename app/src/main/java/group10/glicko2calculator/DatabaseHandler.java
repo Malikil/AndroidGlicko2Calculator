@@ -27,7 +27,7 @@ class DatabaseHandler extends SQLiteOpenHelper
                 "ORDER BY %s %s;";
         return db.rawQuery(
                 String.format(query, sortCol, ascending ? "ASC" : "DESC"),
-                null //new String[] { sortCol }
+                null
         );
     }
 
@@ -92,11 +92,16 @@ class DatabaseHandler extends SQLiteOpenHelper
                 uID,
                 preferences.getFloat("Default Rating", 1500),
                 preferences.getFloat("Default Deviation", 350),
-                preferences.getFloat("Default Volatility", 0.06F)
+                Double.longBitsToDouble(
+                        preferences.getLong(
+                                "Default Volatility",
+                                Double.doubleToLongBits(0.06)
+                        )
+                )
         );
     }
 
-    int updatePlayer(String uID, float rating, float deviation, float volatility)
+    int updatePlayer(String uID, float rating, float deviation, double volatility)
     {
         ContentValues cv = new ContentValues();
         cv.put("rating", rating);
@@ -115,12 +120,6 @@ class DatabaseHandler extends SQLiteOpenHelper
     {
         int deletedGames = db.delete("Games", "winner = ? OR loser = ?", new String[] { uID, uID });
         return db.delete("Players", "uID = ?", new String[] { uID }) + deletedGames;
-    }
-
-    Cursor getGames()
-    {
-        String query = "SELECT * FROM Games;";
-        return db.rawQuery(query, null);
     }
 
     Cursor getGames(String sortCol, boolean ascending)

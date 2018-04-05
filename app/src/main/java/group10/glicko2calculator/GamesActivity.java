@@ -166,6 +166,6 @@ public class GamesActivity extends AppCompatActivity
     {
         ((GamesAdapter)
                 ((ListView)findViewById(R.id.gamesList)).getAdapter()
-        ).updateGames(new DatabaseHandler(this).getGames());
+        ).updateGames(new DatabaseHandler(this).getGames(sort, asc));
     }
 }

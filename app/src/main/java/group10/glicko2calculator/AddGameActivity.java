@@ -117,7 +117,7 @@ public class AddGameActivity extends AppCompatActivity {
                             null,
                             player.getFloat(1),
                             player.getFloat(2),
-                            player.getFloat(3)
+                            player.getDouble(3)
                     );
 
                     player = db.getPlayer(loser);
@@ -127,7 +127,7 @@ public class AddGameActivity extends AppCompatActivity {
                             null,
                             player.getFloat(1),
                             player.getFloat(2),
-                            player.getFloat(3)
+                            player.getDouble(3)
                     );
 
                     // Create a result set
@@ -142,7 +142,12 @@ public class AddGameActivity extends AppCompatActivity {
                             PreferenceManager.getDefaultSharedPreferences(AddGameActivity.this);
                     RatingCalculator calculator = new RatingCalculator(
                             preferences.getFloat("System Tau", 0.75F),
-                            preferences.getFloat("Default Volatility", 0.06F)
+                            Double.longBitsToDouble(
+                                    preferences.getLong(
+                                            "Default Volatility",
+                                            Double.doubleToLongBits(0.06)
+                                    )
+                            )
                     );
                     calculator.updateRatings(results);
 
@@ -151,14 +156,14 @@ public class AddGameActivity extends AppCompatActivity {
                             winner,
                             (float)rWinner.getRating(),
                             (float)rWinner.getRatingDeviation(),
-                            (float)rWinner.getVolatility()
+                            rWinner.getVolatility()
                     );
 
                     db.updatePlayer(
                             loser,
                             (float)rLoser.getRating(),
                             (float)rLoser.getRatingDeviation(),
-                            (float)rLoser.getVolatility()
+                            rLoser.getVolatility()
                     );
 
                     setResult(RESULT_OK);

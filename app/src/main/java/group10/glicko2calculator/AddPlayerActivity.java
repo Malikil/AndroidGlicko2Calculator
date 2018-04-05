@@ -30,12 +30,15 @@ public class AddPlayerActivity extends AppCompatActivity
 
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
         final float defaultRating = preferences.getFloat("Default Rating", 1500),
-                defaultDeviation = preferences.getFloat("Default Deviation", 350),
-                defaultVolatility = preferences.getFloat("Default Volatility", 0.06F);
+                defaultDeviation = preferences.getFloat("Default Deviation", 350);
+        final double defaultVolatility =
+                Double.longBitsToDouble(
+                        preferences.getLong("Default Volatility", Double.doubleToLongBits(0.06))
+                );
 
         ratingEntry.setHint(Float.toString(defaultRating));
         deviationEntry.setHint(Float.toString(defaultDeviation));
-        volatilityEntry.setHint(Float.toString(defaultVolatility));
+        volatilityEntry.setHint(Double.toString(defaultVolatility));
 
         ((Button)findViewById(R.id.saveButton)).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -53,7 +56,8 @@ public class AddPlayerActivity extends AppCompatActivity
                 }
                 else
                 {
-                    float rating, deviation, volatility;
+                    float rating, deviation;
+                    double volatility;
                     if (!ratingEntry.getText().toString().isEmpty())
                         try
                         {
@@ -91,7 +95,7 @@ public class AddPlayerActivity extends AppCompatActivity
                     if (!volatilityEntry.getText().toString().isEmpty())
                         try
                         {
-                            volatility = Float.parseFloat(volatilityEntry.getText().toString());
+                            volatility = Double.parseDouble(volatilityEntry.getText().toString());
                         }
                         catch (NumberFormatException nfe)
                         {
