@@ -13,7 +13,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.25">
 
 
         <AutoCompleteTextView
@@ -66,15 +67,15 @@
     </RelativeLayout>
 
     <ImageButton
-        android:id="@+id/imageButton"
+        android:id="@+id/swapPlayersButton"
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:scaleType="fitCenter"
         app:srcCompat="@drawable/swap"
-        android:contentDescription="@string/switchDesc"
         android:layout_marginStart="8dp"
         android:layout_marginTop="36dp"
-        app:layout_constraintTop_toTopOf="@id/container"
-        app:layout_constraintStart_toEndOf="@id/container" />
+        android:contentDescription="@string/switchDesc"
+        app:layout_constraintStart_toEndOf="@id/container"
+        app:layout_constraintTop_toTopOf="@id/container" />
 
 </android.support.constraint.ConstraintLayout>
