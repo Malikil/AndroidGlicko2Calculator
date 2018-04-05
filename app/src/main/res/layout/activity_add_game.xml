@@ -67,9 +67,10 @@
 
     <ImageButton
         android:id="@+id/imageButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:srcCompat="@android:drawable/ic_menu_revert"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:scaleType="fitCenter"
+        app:srcCompat="@drawable/swap"
         android:contentDescription="@string/switchDesc"
         android:layout_marginStart="8dp"
         android:layout_marginTop="36dp"
