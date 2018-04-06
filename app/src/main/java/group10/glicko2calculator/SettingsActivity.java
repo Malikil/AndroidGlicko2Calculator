@@ -23,10 +23,7 @@ public class SettingsActivity extends AppCompatActivity {
 
         final SharedPreferences preferences =
                 PreferenceManager.getDefaultSharedPreferences(this);
-        final double tau = Double.longBitsToDouble(preferences.getLong(
-                "System Tau",
-                Double.doubleToLongBits(0.75)
-        ));
+        final float tau = preferences.getFloat("System Tau", 0.75F);
         final double rating = Double.longBitsToDouble(preferences.getLong(
                 "Default Rating",
                 Double.doubleToLongBits(1500))
@@ -45,7 +42,7 @@ public class SettingsActivity extends AppCompatActivity {
                        deviationText = findViewById(R.id.defDeviationEntry),
                        volatilityText = findViewById(R.id.defVolatilityEntry);
 
-        tauText.setText(Double.toString(tau));
+        tauText.setText(Float.toString(tau));
         ratingText.setText(Double.toString(rating));
         deviationText.setText(Double.toString(deviation));
         volatilityText.setText(Double.toString(volatility));
@@ -56,13 +53,13 @@ public class SettingsActivity extends AppCompatActivity {
             {
                 try
                 {
-                    double newTau = Double.parseDouble(tauText.getText().toString()),
-                            newRating = Double.parseDouble(ratingText.getText().toString()),
+                    float newTau = Float.parseFloat(tauText.getText().toString());
+                    double newRating = Double.parseDouble(ratingText.getText().toString()),
                             newDeviation = Double.parseDouble(deviationText.getText().toString()),
                             newVolatility = Double.parseDouble(volatilityText.getText().toString());
 
                     SharedPreferences.Editor editor = preferences.edit();
-                    editor.putLong("System Tau", Double.doubleToLongBits(newTau));
+                    editor.putFloat("System Tau", newTau);
                     editor.putLong("Default Rating", Double.doubleToLongBits(newRating));
                     editor.putLong("Default Deviation", Double.doubleToLongBits(newDeviation));
                     editor.putLong("Default Volatility", Double.doubleToLongBits(newVolatility));
