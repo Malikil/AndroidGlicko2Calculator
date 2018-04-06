@@ -23,24 +23,31 @@ public class SettingsActivity extends AppCompatActivity {
 
         final SharedPreferences preferences =
                 PreferenceManager.getDefaultSharedPreferences(this);
-        final float tau = preferences.getFloat("System Tau", 0.75F),
-                    rating = preferences.getFloat("Default Rating", 1500),
-                    deviation = preferences.getFloat("Default Deviation", 350);
-        final double volatility =
-                Double.longBitsToDouble(
-                        preferences.getLong(
-                                "Default Volatility",
-                                Double.doubleToLongBits(0.06))
-                );
+        final double tau = Double.longBitsToDouble(preferences.getLong(
+                "System Tau",
+                Double.doubleToLongBits(0.75)
+        ));
+        final double rating = Double.longBitsToDouble(preferences.getLong(
+                "Default Rating",
+                Double.doubleToLongBits(1500))
+        );
+        final double deviation = Double.longBitsToDouble(preferences.getLong(
+                "Default Deviation",
+                Double.doubleToLongBits(350))
+        );
+        final double volatility = Double.longBitsToDouble(preferences.getLong(
+                "Default Volatility",
+                Double.doubleToLongBits(0.06))
+        );
 
         final EditText tauText = findViewById(R.id.tauEntry),
                        ratingText = findViewById(R.id.defRatingEntry),
                        deviationText = findViewById(R.id.defDeviationEntry),
                        volatilityText = findViewById(R.id.defVolatilityEntry);
 
-        tauText.setText(Float.toString(tau));
-        ratingText.setText(Float.toString(rating));
-        deviationText.setText(Float.toString(deviation));
+        tauText.setText(Double.toString(tau));
+        ratingText.setText(Double.toString(rating));
+        deviationText.setText(Double.toString(deviation));
         volatilityText.setText(Double.toString(volatility));
 
         ((Button)findViewById(R.id.saveButton)).setOnClickListener(new View.OnClickListener() {
@@ -49,15 +56,15 @@ public class SettingsActivity extends AppCompatActivity {
             {
                 try
                 {
-                    float newTau = Float.parseFloat(tauText.getText().toString()),
-                          newRating = Float.parseFloat(ratingText.getText().toString()),
-                          newDeviation = Float.parseFloat(deviationText.getText().toString());
-                    double newVolatility = Double.parseDouble(volatilityText.getText().toString());
+                    double newTau = Double.parseDouble(tauText.getText().toString()),
+                            newRating = Double.parseDouble(ratingText.getText().toString()),
+                            newDeviation = Double.parseDouble(deviationText.getText().toString()),
+                            newVolatility = Double.parseDouble(volatilityText.getText().toString());
 
                     SharedPreferences.Editor editor = preferences.edit();
-                    editor.putFloat("System Tau", newTau);
-                    editor.putFloat("Default Rating", newRating);
-                    editor.putFloat("Default Deviation", newDeviation);
+                    editor.putLong("System Tau", Double.doubleToLongBits(newTau));
+                    editor.putLong("Default Rating", Double.doubleToLongBits(newRating));
+                    editor.putLong("Default Deviation", Double.doubleToLongBits(newDeviation));
                     editor.putLong("Default Volatility", Double.doubleToLongBits(newVolatility));
                     editor.commit();
                     finish();
