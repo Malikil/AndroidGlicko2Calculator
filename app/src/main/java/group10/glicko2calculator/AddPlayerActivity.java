@@ -29,18 +29,23 @@ public class AddPlayerActivity extends AppCompatActivity
                     volatilityEntry = findViewById(R.id.volatilityEntry);
 
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
-        final float defaultRating = preferences.getFloat("Default Rating", 1500),
-                defaultDeviation = preferences.getFloat("Default Deviation", 350);
-        final double defaultVolatility =
-                Double.longBitsToDouble(
-                        preferences.getLong("Default Volatility", Double.doubleToLongBits(0.06))
-                );
+        final double defaultRating = Double.longBitsToDouble(preferences.getLong(
+                "Default Rating",
+                Double.doubleToLongBits(1500)));
+        final double defaultDeviation = Double.longBitsToDouble(preferences.getLong(
+                "Default Deviation",
+                Double.doubleToLongBits(350))
+        );
+        final double defaultVolatility = Double.longBitsToDouble(preferences.getLong(
+                "Default Volatility",
+                Double.doubleToLongBits(0.06))
+        );
 
-        ratingEntry.setHint(Float.toString(defaultRating));
-        deviationEntry.setHint(Float.toString(defaultDeviation));
+        ratingEntry.setHint(Double.toString(defaultRating));
+        deviationEntry.setHint(Double.toString(defaultDeviation));
         volatilityEntry.setHint(Double.toString(defaultVolatility));
 
-        ((Button)findViewById(R.id.saveButton)).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.saveButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view)
             {
@@ -56,12 +61,11 @@ public class AddPlayerActivity extends AppCompatActivity
                 }
                 else
                 {
-                    float rating, deviation;
-                    double volatility;
+                    double rating, deviation, volatility;
                     if (!ratingEntry.getText().toString().isEmpty())
                         try
                         {
-                            rating = Float.parseFloat(ratingEntry.getText().toString());
+                            rating = Double.parseDouble(ratingEntry.getText().toString());
                         }
                         catch (NumberFormatException nfe)
                         {
@@ -78,7 +82,7 @@ public class AddPlayerActivity extends AppCompatActivity
                     if (!deviationEntry.getText().toString().isEmpty())
                         try
                         {
-                            deviation = Float.parseFloat(deviationEntry.getText().toString());
+                            deviation = Double.parseDouble(deviationEntry.getText().toString());
                         }
                         catch (NumberFormatException nfe)
                         {

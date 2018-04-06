@@ -21,9 +21,8 @@ import java.util.Locale;
 
 public class PlayerInfoActivity extends AppCompatActivity
 {
-    private final int DOUBLE_EQUALITY = 2;
-    private float initRating, initDeviation;
-    private double initVolatility;
+    private final int DOUBLE_EQUALITY = 10000;
+    private double initRating, initDeviation, initVolatility;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -56,14 +55,14 @@ public class PlayerInfoActivity extends AppCompatActivity
                 EditText ratingEntry = findViewById(R.id.ratingEntry),
                         deviationEntry = findViewById(R.id.deviationEntry),
                         volatilityEntry = findViewById(R.id.volatilityEntry);
-                float newRating = Float.parseFloat(ratingEntry.getText().toString()),
-                        newDeviation = Float.parseFloat(deviationEntry.getText().toString());
-                double newVolatility = Double.parseDouble(volatilityEntry.getText().toString());
+                double newRating = Double.parseDouble(ratingEntry.getText().toString()),
+                        newDeviation = Double.parseDouble(deviationEntry.getText().toString()),
+                        newVolatility = Double.parseDouble(volatilityEntry.getText().toString());
                 // Check if values are different
                 ContentValues cv = new ContentValues();
-                if (Math.abs(initRating - newRating) > Float.MIN_NORMAL)
+                if (Math.abs(initRating - newRating) > Double.MIN_NORMAL * DOUBLE_EQUALITY)
                     cv.put("rating", newRating);
-                if (Math.abs(initDeviation - newDeviation) > Float.MIN_NORMAL)
+                if (Math.abs(initDeviation - newDeviation) > Double.MIN_NORMAL * DOUBLE_EQUALITY)
                     cv.put("deviation", newDeviation);
                 if (Math.abs(initVolatility - newVolatility) > Double.MIN_NORMAL * DOUBLE_EQUALITY)
                     cv.put("volatility", newVolatility);
@@ -113,8 +112,8 @@ public class PlayerInfoActivity extends AppCompatActivity
         Cursor playerObj = db.getPlayerWithGameCount(playerName);
         playerObj.moveToFirst();
 
-        initRating = playerObj.getFloat(1);
-        initDeviation = playerObj.getFloat(2);
+        initRating = playerObj.getDouble(1);
+        initDeviation = playerObj.getDouble(2);
         initVolatility = playerObj.getDouble(3);
         int won = playerObj.getInt(4),
                 total = playerObj.getInt(5);
@@ -128,8 +127,8 @@ public class PlayerInfoActivity extends AppCompatActivity
                 winRateDisplay = findViewById(R.id.winRateDisplay);
 
         nameDisplay.setText(playerName);
-        ratingEntry.setText(Float.toString(initRating));
-        deviationEntry.setText(Float.toString(initDeviation));
+        ratingEntry.setText(Double.toString(initRating));
+        deviationEntry.setText(Double.toString(initDeviation));
         volatilityEntry.setText(Double.toString(initVolatility));
 
         NumberFormat format = NumberFormat.getInstance(Locale.getDefault());
