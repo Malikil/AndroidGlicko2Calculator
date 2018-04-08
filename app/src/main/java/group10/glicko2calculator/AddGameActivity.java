@@ -71,8 +71,14 @@ public class AddGameActivity extends AppCompatActivity {
                         loser = ((EditText)findViewById(R.id.player2Entry)).getText().toString().trim();
                 boolean draw = ((CheckBox)findViewById(R.id.drawCheck)).isChecked();
 
-
-                if(winner.length() > 32 || loser.length() > 32)
+                // Make sure both player boxes have players selected
+                if (winner.length() < 1 || loser.length() < 1)
+                    Toast.makeText(
+                            AddGameActivity.this,
+                            "Please select both players.",
+                            Toast.LENGTH_SHORT
+                    ).show();
+                else if(winner.length() > 32 || loser.length() > 32)
                     Toast.makeText(
                             AddGameActivity.this,
                             "Player names should be less than 32 characters.",

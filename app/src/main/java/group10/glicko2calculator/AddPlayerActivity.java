@@ -51,11 +51,11 @@ public class AddPlayerActivity extends AppCompatActivity
             {
                 // TODO Cleanup
                 String name = pName.getText().toString().trim();
-                if (name.isEmpty())
+                if (name.length() < 1 || name.length() > 32)
                 {
                     Toast.makeText(
                             AddPlayerActivity.this,
-                            "Please enter a player name.",
+                            "Please enter a player name between 1 and 32 characters.",
                             Toast.LENGTH_SHORT
                     ).show();
                 }
