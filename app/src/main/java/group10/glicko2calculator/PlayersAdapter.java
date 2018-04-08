@@ -1,6 +1,8 @@
 package group10.glicko2calculator;
 
 import android.app.Activity;
+import android.content.ContentValues;
+import android.content.Context;
 import android.database.Cursor;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,7 +23,7 @@ public class PlayersAdapter extends BaseAdapter
     private Activity context;
     private Cursor cursor;
 
-    public PlayersAdapter(Activity context, Cursor dbCursor)
+    PlayersAdapter(Activity context, Cursor dbCursor)
     {
         this.context = context;
         cursor = dbCursor;
@@ -59,8 +61,14 @@ public class PlayersAdapter extends BaseAdapter
         // Use a number formatter to display numbers
         NumberFormat format = NumberFormat.getInstance(Locale.getDefault());
         ((TextView)view.findViewById(R.id.column1)).setText(cursor.getString(0));
-        ((TextView)view.findViewById(R.id.column2)).setText(String.format("%.0f", cursor.getFloat(1)));
-        ((TextView)view.findViewById(R.id.column3)).setText(String.format("%.1f", cursor.getFloat(2))); // TODO
+        ((TextView)view.findViewById(R.id.column2)).setText(String.format(
+                Locale.CANADA,
+                "%.0f",
+                cursor.getFloat(1)));
+        ((TextView)view.findViewById(R.id.column3)).setText(String.format(
+                Locale.CANADA,
+                "%.1f",
+                cursor.getFloat(2)));
 
         return view;
     }

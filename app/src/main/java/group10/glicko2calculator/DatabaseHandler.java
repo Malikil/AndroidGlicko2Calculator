@@ -14,7 +14,7 @@ class DatabaseHandler extends SQLiteOpenHelper
 {
     private SQLiteDatabase db = getReadableDatabase();
     private static String DATABASE_NAME = "GlickoDB";
-    private static int DATABASE_VERSION = 1;
+    private static int DATABASE_VERSION = 2;
 
     DatabaseHandler(Context context)
     {
@@ -74,7 +74,7 @@ class DatabaseHandler extends SQLiteOpenHelper
             return false;
     }
 
-    long addPlayer(String uID, float rating, float deviation, double volatility)
+    long addPlayer(String uID, double rating, double deviation, double volatility)
     {
         ContentValues cv = new ContentValues();
         cv.put("uID", uID);
@@ -90,8 +90,18 @@ class DatabaseHandler extends SQLiteOpenHelper
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
         return addPlayer(
                 uID,
-                preferences.getFloat("Default Rating", 1500),
-                preferences.getFloat("Default Deviation", 350),
+                Double.longBitsToDouble(
+                        preferences.getLong(
+                                "Default Rating",
+                                Double.doubleToLongBits(1500)
+                        )
+                ),
+                Double.longBitsToDouble(
+                        preferences.getLong(
+                                "Default Deviation",
+                                Double.doubleToLongBits(350)
+                        )
+                ),
                 Double.longBitsToDouble(
                         preferences.getLong(
                                 "Default Volatility",
@@ -101,7 +111,7 @@ class DatabaseHandler extends SQLiteOpenHelper
         );
     }
 
-    int updatePlayer(String uID, float rating, float deviation, double volatility)
+    int updatePlayer(String uID, double rating, double deviation, double volatility)
     {
         ContentValues cv = new ContentValues();
         cv.put("rating", rating);
@@ -168,7 +178,7 @@ class DatabaseHandler extends SQLiteOpenHelper
                 "uID VARCHAR(32) PRIMARY KEY, " +
                 "rating REAL NOT NULL, " +
                 "deviation REAL NOT NULL," +
-                "volatility FLOAT NOT NULL);");
+                "volatility REAL NOT NULL);");
 
         db.execSQL("CREATE TABLE IF NOT EXISTS Games (" +
                 "gameID INTEGER PRIMARY KEY, " +
@@ -180,8 +190,10 @@ class DatabaseHandler extends SQLiteOpenHelper
     }
 
     @Override
-    public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1)
+    public void onUpgrade(SQLiteDatabase db, int i, int i1)
     {
-
+        db.execSQL("DROP TABLE IF EXISTS Games;");
+        db.execSQL("DROP TABLE IF EXISTS Players;");
+        onCreate(db);
     }
 }

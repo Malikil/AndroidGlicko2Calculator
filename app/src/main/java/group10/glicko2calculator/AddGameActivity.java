@@ -72,27 +72,18 @@ public class AddGameActivity extends AppCompatActivity {
                 boolean draw = ((CheckBox)findViewById(R.id.drawCheck)).isChecked();
 
 
-                if(winner.length() > 32)
-                {
+                if(winner.length() > 32 || loser.length() > 32)
                     Toast.makeText(
                             AddGameActivity.this,
-                            "Winner name too big, must be less than 32.",
-                            Toast.LENGTH_SHORT).show();
-                }
-                else if(loser.length() > 32)
-                {
-                    Toast.makeText(
-                            AddGameActivity.this,
-                            "Loser name too big, must be less than 32.",
-                            Toast.LENGTH_SHORT).show();
-                }
+                            "Player names should be less than 32 characters.",
+                            Toast.LENGTH_SHORT
+                    ).show();
                 else if(winner.equals(loser))
-                {
                     Toast.makeText(
                             AddGameActivity.this,
                             "Please select two different players.",
-                            Toast.LENGTH_SHORT).show();
-                }
+                            Toast.LENGTH_SHORT
+                    ).show();
                 // Check if the players are in the database
                 else if (!db.playerExists(winner))
                 {
@@ -101,34 +92,33 @@ public class AddGameActivity extends AppCompatActivity {
                     else
                         askForPlayer(winner, null); // Only winner doesn't exist
                 }
-
-
                 else if (!db.playerExists(loser))
                     askForPlayer(loser, null); // Only loser doesn't exist
                 else
                 {
                     db.addGame(winner, loser, draw);
-                    // TODO For now, add games to the calculator here
                     // Create player objects using database information
                     Cursor player = db.getPlayer(winner);
                     player.moveToFirst();
                     Rating rWinner = new Rating(
                             winner,
                             null,
-                            player.getFloat(1),
-                            player.getFloat(2),
+                            player.getDouble(1),
+                            player.getDouble(2),
                             player.getDouble(3)
                     );
+                    player.close();
 
                     player = db.getPlayer(loser);
                     player.moveToFirst();
                     Rating rLoser = new Rating(
                             loser,
                             null,
-                            player.getFloat(1),
-                            player.getFloat(2),
+                            player.getDouble(1),
+                            player.getDouble(2),
                             player.getDouble(3)
                     );
+                    player.close();
 
                     // Create a result set
                     RatingPeriodResults results = new RatingPeriodResults();
@@ -154,15 +144,15 @@ public class AddGameActivity extends AppCompatActivity {
                     // Update database with new results
                     db.updatePlayer(
                             winner,
-                            (float)rWinner.getRating(),
-                            (float)rWinner.getRatingDeviation(),
+                            rWinner.getRating(),
+                            rWinner.getRatingDeviation(),
                             rWinner.getVolatility()
                     );
 
                     db.updatePlayer(
                             loser,
-                            (float)rLoser.getRating(),
-                            (float)rLoser.getRatingDeviation(),
+                            rLoser.getRating(),
+                            rLoser.getRatingDeviation(),
                             rLoser.getVolatility()
                     );
 
