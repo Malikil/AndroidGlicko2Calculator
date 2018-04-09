@@ -10,17 +10,21 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 
+/**
+ *
+ */
 class DatabaseHandler extends SQLiteOpenHelper
 {
     private SQLiteDatabase db = getReadableDatabase();
-    private static String DATABASE_NAME = "GlickoDB";
-    private static int DATABASE_VERSION = 2;
+    private static final String DATABASE_NAME = "GlickoDB";
+    private static final int DATABASE_VERSION = 2;
 
     DatabaseHandler(Context context)
     {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
+    //Get all players and return cursor
     Cursor getAllPlayers(String sortCol, boolean ascending)
     {
         String query = "SELECT * FROM Players " +
@@ -31,6 +35,7 @@ class DatabaseHandler extends SQLiteOpenHelper
         );
     }
 
+    //Get player and return cursor
     Cursor getPlayer(String uID)
     {
         String query = "SELECT * FROM Players " +
@@ -38,6 +43,7 @@ class DatabaseHandler extends SQLiteOpenHelper
         return db.rawQuery(query, new String[] { uID });
     }
 
+    //Get player info and return cursor
     Cursor getPlayerWithGameCount(String uID)
     {
         String query = "SELECT Players.*, SUM(CASE WHEN winner = uID AND isDraw = 0 THEN 1 ELSE 0 END) AS gamesWon, " +
@@ -58,7 +64,7 @@ class DatabaseHandler extends SQLiteOpenHelper
         else
             return results;
     }
-
+    //Check if player exists
     boolean playerExists(String uID)
     {
         Cursor result = db.rawQuery(
@@ -74,6 +80,7 @@ class DatabaseHandler extends SQLiteOpenHelper
             return false;
     }
 
+    //Add a player
     long addPlayer(String uID, double rating, double deviation, double volatility)
     {
         ContentValues cv = new ContentValues();
@@ -85,6 +92,11 @@ class DatabaseHandler extends SQLiteOpenHelper
         return db.insert("Players", null, cv);
     }
 
+    /**
+     * Gets the default values from the context, and creates a new player
+     * @param uID The player's name
+     * @param context The current activity
+     */
     long addPlayerWithDefaults(String uID, Activity context)
     {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
@@ -111,6 +123,7 @@ class DatabaseHandler extends SQLiteOpenHelper
         );
     }
 
+    //Update a player
     int updatePlayer(String uID, double rating, double deviation, double volatility)
     {
         ContentValues cv = new ContentValues();
@@ -121,17 +134,20 @@ class DatabaseHandler extends SQLiteOpenHelper
         return updatePlayer(uID, cv);
     }
 
+    //Update a player using ContentValues
     int updatePlayer(String uID, ContentValues cv)
     {
         return db.update("Players", cv, "uID = ?", new String[] { uID });
     }
 
+    //Delete a player
     int deletePlayer(String uID)
     {
         int deletedGames = db.delete("Games", "winner = ? OR loser = ?", new String[] { uID, uID });
         return db.delete("Players", "uID = ?", new String[] { uID }) + deletedGames;
     }
 
+    //Get games and return cursor
     Cursor getGames(String sortCol, boolean ascending)
     {
         String query = "SELECT * FROM Games " +
@@ -142,6 +158,7 @@ class DatabaseHandler extends SQLiteOpenHelper
         );
     }
 
+    //Add game
     long addGame(String winner, String loser, boolean isDraw)
     {
         ContentValues cv = new ContentValues();
@@ -153,6 +170,7 @@ class DatabaseHandler extends SQLiteOpenHelper
     }
 
 
+    //Get game by ID and return cursor
     Cursor getGameByID(String gameID)
     {
         String query = "SELECT * FROM Games " +
@@ -162,6 +180,7 @@ class DatabaseHandler extends SQLiteOpenHelper
         return c;
     }
 
+    //Delete a game
     int deleteGame(int gameID)
     {
         return db.delete(

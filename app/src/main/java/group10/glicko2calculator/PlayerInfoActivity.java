@@ -29,8 +29,10 @@ public class PlayerInfoActivity extends AppCompatActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_player_info);
+        //Get toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        //Put back button on toolbar
         putInToolbar(toolbar);
 
         final String pname = this.getIntent().getStringExtra("Player Name");
@@ -107,6 +109,9 @@ public class PlayerInfoActivity extends AppCompatActivity
         });
     }
 
+    /**
+     * Initialize all elements in the activity with the player's information
+     */
     private void initValues(DatabaseHandler db, String playerName)
     {
         Cursor playerObj = db.getPlayerWithGameCount(playerName);
@@ -152,6 +157,7 @@ public class PlayerInfoActivity extends AppCompatActivity
     }
 
     private void putInToolbar(Toolbar toolbar) {
+        //Get back button and put on toolbar
         Drawable drawable = getResources().getDrawable(R.drawable.arrow);
         drawable = resize(drawable, 64, 64);
         toolbar.setNavigationIcon(drawable);
@@ -163,6 +169,7 @@ public class PlayerInfoActivity extends AppCompatActivity
         });
     }
     private Drawable resize(Drawable image, int width, int height) {
+        //Get scaled bitmap
         Bitmap b = ((BitmapDrawable)image).getBitmap();
         Bitmap bitmapResized = Bitmap.createScaledBitmap(b, width, height, false);
         return new BitmapDrawable(getResources(), bitmapResized);

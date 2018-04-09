@@ -13,6 +13,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //Get all buttons
         final Button infoButton = findViewById(R.id.viewInfoButton),
                      playersButton = findViewById(R.id.viewPlayersButton),
                      gamesButton = findViewById(R.id.viewGamesButton),
@@ -22,14 +23,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view)
             {
-                // TODO Show legal information and a short description of the app, this can either
-                // be in a popup window or a new activity. For now I'd like to look at the ease of
-                // using a popup window, as I feel a new activity will interrupt the flow of usage
-                // more, resulting in a less satisfactory user experience.
-                /*new AlertDialog.Builder(MainActivity.this)
-                        .setTitle(R.string.viewInfo)
-                        .setMessage(R.string.legal)
-                        .setNeutralButton(android.R.string.ok, null).show();*/
+                // Show legal information and a short description of the app.
                 startActivity(new Intent(MainActivity.this, AboutActivity.class));
             }
         });
@@ -37,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view)
             {
-                // TODO Go to the players activity, where the user can see all players in a table
+                // Go to the players activity, where the user can see all players in a table
                 // and add more players if desired
                 startActivity(new Intent(MainActivity.this, PlayersActivity.class));
             }
@@ -46,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view)
             {
-                // TODO Go to the games activity, where the user can see all current games in a
+                // Go to the games activity, where the user can see all current games in a
                 // table, and add more games as they occur. Perhaps also include calculating new
                 // ratings from the games screen
                 startActivity(new Intent(MainActivity.this, GamesActivity.class));
@@ -56,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view)
             {
-                // TODO Go to a calculator settings activity, where the user can adjust the default
+                // Go to a calculator settings activity, where the user can adjust the default
                 // values for rating, rating deviation, and volatility, as well as adjust the system
                 // tau
                 startActivity(new Intent(MainActivity.this, SettingsActivity.class));

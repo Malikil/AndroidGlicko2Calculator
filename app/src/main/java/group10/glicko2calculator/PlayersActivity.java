@@ -30,10 +30,12 @@ public class PlayersActivity extends AppCompatActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_players);
+        //Create a toolbar
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        //Put back button on toolbar
         putInToolbar(toolbar);
-
+        //Get database
         DatabaseHandler db = new DatabaseHandler(this);
         if (savedInstanceState != null)
         {
@@ -117,12 +119,14 @@ public class PlayersActivity extends AppCompatActivity
     @Override
     protected void onSaveInstanceState(Bundle outState)
     {
+        //Save
         outState.putString("Current Sort", sort);
         outState.putBoolean("Sort Type", asc);
         super.onSaveInstanceState(outState);
     }
 
     private void putInToolbar(Toolbar toolbar) {
+        //Set toolbar back icon
         Drawable drawable = getResources().getDrawable(R.drawable.arrow);
         drawable = resize(drawable, 64, 64);
         toolbar.setNavigationIcon(drawable);
@@ -134,6 +138,7 @@ public class PlayersActivity extends AppCompatActivity
         });
     }
     private Drawable resize(Drawable image, int width, int height) {
+        //Get drawable bitmap scaled
         Bitmap b = ((BitmapDrawable)image).getBitmap();
         Bitmap bitmapResized = Bitmap.createScaledBitmap(b, width, height, false);
         return new BitmapDrawable(getResources(), bitmapResized);

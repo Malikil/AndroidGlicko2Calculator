@@ -53,6 +53,7 @@ public class GamesAdapter extends BaseAdapter
         }
         cursor.moveToPosition(i);
 
+        // Winner in column 1, loser in column 2, whether the game was a draw in 3
         ((TextView)view.findViewById(R.id.column1)).setText(cursor.getString(1));
         ((TextView)view.findViewById(R.id.column2)).setText(cursor.getString(2));
         boolean isDraw = cursor.getInt(3) > 0;

@@ -26,25 +26,35 @@ import org.goochjs.glicko2.RatingPeriodResults;
 import java.util.ArrayList;
 import java.util.Locale;
 
+/**
+ * The screen to add games to the database
+ */
 public class AddGameActivity extends AppCompatActivity {
-    ArrayList<String> players = new ArrayList<String>();
+    //Create a list of players
+    ArrayList<String> players;
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_add_game);
+        //Create database handler
         final DatabaseHandler db = new DatabaseHandler(this);
+        //Set data for autocomplete feilds
+        players = new ArrayList<>();
         setAutocompleteData(db);
+        //Get AutoCompleteTextViews
         final AutoCompleteTextView editTxtPlayer1 = findViewById(R.id.player1Entry);
         final AutoCompleteTextView editTxtPlayer2 = findViewById(R.id.player2Entry);
+        //Set Threshhold
         editTxtPlayer1.setThreshold(1);
         editTxtPlayer2.setThreshold(1);
+        //Set an array adapter for Autocomplete
         ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.select_dialog_item ,players);
         editTxtPlayer1.setAdapter(adapter);
         editTxtPlayer2.setAdapter(adapter);
         
-
+        //Create button to swap names
         ImageButton flipButton = (ImageButton)findViewById(R.id.swapPlayersButton);
         flipButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -63,10 +73,12 @@ public class AddGameActivity extends AppCompatActivity {
         if (initPlayer != null)
             ((EditText)findViewById(R.id.player1Entry)).setText(initPlayer);
 
+        // Set add game button listener
         ((Button)findViewById(R.id.addGameButton)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view)
             {
+                // Get the entered players, and whether the game is a draw
                 String winner = ((EditText)findViewById(R.id.player1Entry)).getText().toString().trim(),
                         loser = ((EditText)findViewById(R.id.player2Entry)).getText().toString().trim();
                 boolean draw = ((CheckBox)findViewById(R.id.drawCheck)).isChecked();
@@ -78,12 +90,14 @@ public class AddGameActivity extends AppCompatActivity {
                             "Please select both players.",
                             Toast.LENGTH_SHORT
                     ).show();
+                // Make sure player names aren't too long
                 else if(winner.length() > 32 || loser.length() > 32)
                     Toast.makeText(
                             AddGameActivity.this,
                             "Player names should be less than 32 characters.",
                             Toast.LENGTH_SHORT
                     ).show();
+                // Make sure the entered players are different players
                 else if(winner.equals(loser))
                     Toast.makeText(
                             AddGameActivity.this,
@@ -100,7 +114,7 @@ public class AddGameActivity extends AppCompatActivity {
                 }
                 else if (!db.playerExists(loser))
                     askForPlayer(loser, null); // Only loser doesn't exist
-                else
+                else // Add the game
                 {
                     db.addGame(winner, loser, draw);
                     // Create player objects using database information
@@ -175,6 +189,7 @@ public class AddGameActivity extends AppCompatActivity {
              */
             private void askForPlayer(final String uID, final String uID2)
             {
+                //Crete alert to ask whether to create player
                 new AlertDialog.Builder(AddGameActivity.this)
                         .setTitle("Create Player")
                         .setMessage(String.format(
@@ -220,13 +235,19 @@ public class AddGameActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Sets up an array list with the players
+     * @param db The database handler to get the players from
+     */
     public void setAutocompleteData(DatabaseHandler db)
     {
         try {
+            //Get cursor from DB
             Cursor playerList = db.getAllPlayers("uID", true);
             if (playerList != null) {
                 playerList.moveToFirst();
                 do {
+                    //Add player to list for autocomplete
                     players.add(playerList.getString(0));
                 } while (playerList.moveToNext());
                 playerList.close();
@@ -234,6 +255,7 @@ public class AddGameActivity extends AppCompatActivity {
         }
         catch (Exception ex)
         {
+            //Make toast if something went wrong
             Toast.makeText(this, "AutoComplete was not able to index players", Toast.LENGTH_SHORT).show();
         }
     }
