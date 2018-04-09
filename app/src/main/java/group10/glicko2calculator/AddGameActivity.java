@@ -26,9 +26,12 @@ import org.goochjs.glicko2.RatingPeriodResults;
 import java.util.ArrayList;
 import java.util.Locale;
 
+/**
+ * The screen to add games to the database
+ */
 public class AddGameActivity extends AppCompatActivity {
     //Create a list of players
-    ArrayList<String> players = new ArrayList<String>();
+    ArrayList<String> players;
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -38,6 +41,7 @@ public class AddGameActivity extends AppCompatActivity {
         //Create database handler
         final DatabaseHandler db = new DatabaseHandler(this);
         //Set data for autocomplete feilds
+        players = new ArrayList<>();
         setAutocompleteData(db);
         //Get AutoCompleteTextViews
         final AutoCompleteTextView editTxtPlayer1 = findViewById(R.id.player1Entry);
@@ -69,10 +73,12 @@ public class AddGameActivity extends AppCompatActivity {
         if (initPlayer != null)
             ((EditText)findViewById(R.id.player1Entry)).setText(initPlayer);
 
+        // Set add game button listener
         ((Button)findViewById(R.id.addGameButton)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view)
             {
+                // Get the entered players, and whether the game is a draw
                 String winner = ((EditText)findViewById(R.id.player1Entry)).getText().toString().trim(),
                         loser = ((EditText)findViewById(R.id.player2Entry)).getText().toString().trim();
                 boolean draw = ((CheckBox)findViewById(R.id.drawCheck)).isChecked();
@@ -84,12 +90,14 @@ public class AddGameActivity extends AppCompatActivity {
                             "Please select both players.",
                             Toast.LENGTH_SHORT
                     ).show();
+                // Make sure player names aren't too long
                 else if(winner.length() > 32 || loser.length() > 32)
                     Toast.makeText(
                             AddGameActivity.this,
                             "Player names should be less than 32 characters.",
                             Toast.LENGTH_SHORT
                     ).show();
+                // Make sure the entered players are different players
                 else if(winner.equals(loser))
                     Toast.makeText(
                             AddGameActivity.this,
@@ -106,7 +114,7 @@ public class AddGameActivity extends AppCompatActivity {
                 }
                 else if (!db.playerExists(loser))
                     askForPlayer(loser, null); // Only loser doesn't exist
-                else
+                else // Add the game
                 {
                     db.addGame(winner, loser, draw);
                     // Create player objects using database information
@@ -227,6 +235,10 @@ public class AddGameActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Sets up an array list with the players
+     * @param db The database handler to get the players from
+     */
     public void setAutocompleteData(DatabaseHandler db)
     {
         try {

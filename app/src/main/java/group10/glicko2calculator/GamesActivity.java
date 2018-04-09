@@ -19,6 +19,9 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+/**
+ * The list of all games
+ */
 public class GamesActivity extends AppCompatActivity
 {
     private String sort;
@@ -40,6 +43,7 @@ public class GamesActivity extends AppCompatActivity
                 new GamesAdapter(this, db.getGames("gameID", true))
         );
 
+        // If the table was sorted, restore the sort
         if (savedInstanceState != null)
         {
             sort = savedInstanceState.getString("Sort", "gameID");

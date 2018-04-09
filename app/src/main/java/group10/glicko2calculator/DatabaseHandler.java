@@ -10,11 +10,14 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 
+/**
+ *
+ */
 class DatabaseHandler extends SQLiteOpenHelper
 {
     private SQLiteDatabase db = getReadableDatabase();
-    private static String DATABASE_NAME = "GlickoDB";
-    private static int DATABASE_VERSION = 2;
+    private static final String DATABASE_NAME = "GlickoDB";
+    private static final int DATABASE_VERSION = 2;
 
     DatabaseHandler(Context context)
     {
@@ -89,6 +92,11 @@ class DatabaseHandler extends SQLiteOpenHelper
         return db.insert("Players", null, cv);
     }
 
+    /**
+     * Gets the default values from the context, and creates a new player
+     * @param uID The player's name
+     * @param context The current activity
+     */
     long addPlayerWithDefaults(String uID, Activity context)
     {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);

@@ -109,6 +109,9 @@ public class PlayerInfoActivity extends AppCompatActivity
         });
     }
 
+    /**
+     * Initialize all elements in the activity with the player's information
+     */
     private void initValues(DatabaseHandler db, String playerName)
     {
         Cursor playerObj = db.getPlayerWithGameCount(playerName);

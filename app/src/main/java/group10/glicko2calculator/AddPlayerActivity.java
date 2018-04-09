@@ -15,6 +15,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+/**
+ * The screen to add players to the database
+ */
 public class AddPlayerActivity extends AppCompatActivity
 {
     @Override
@@ -40,7 +43,7 @@ public class AddPlayerActivity extends AppCompatActivity
                 "Default Volatility",
                 Double.doubleToLongBits(0.06))
         );
-        //Set hint for text views programatically
+        //Set hint for text views programmatically
         ratingEntry.setHint(Double.toString(defaultRating));
         deviationEntry.setHint(Double.toString(defaultDeviation));
         volatilityEntry.setHint(Double.toString(defaultVolatility));
@@ -50,7 +53,6 @@ public class AddPlayerActivity extends AppCompatActivity
             @Override
             public void onClick(View view)
             {
-                // TODO Cleanup
                 String name = pName.getText().toString().trim();
                 if (name.length() < 1 || name.length() > 32)
                 {
@@ -62,6 +64,8 @@ public class AddPlayerActivity extends AppCompatActivity
                 }
                 else
                 {
+                    // If the user hasn't entered values for rating, deviation, or volatility, use
+                    // the default values
                     double rating, deviation, volatility;
                     if (!ratingEntry.getText().toString().isEmpty())
                         try
@@ -114,6 +118,7 @@ public class AddPlayerActivity extends AppCompatActivity
                     else
                         volatility = defaultVolatility;
 
+                    // Add the player
                     if (new DatabaseHandler(AddPlayerActivity.this)
                             .addPlayer(name, rating, deviation, volatility) == -1)
                         Toast.makeText(
