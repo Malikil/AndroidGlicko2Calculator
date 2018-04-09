@@ -11,7 +11,7 @@ public class AboutActivity extends AppCompatActivity {
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about);
-
+        //Make back button go back to main screen
         ((Button)findViewById(R.id.aboutOkButton)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view)

@@ -27,6 +27,7 @@ import java.util.ArrayList;
 import java.util.Locale;
 
 public class AddGameActivity extends AppCompatActivity {
+    //Create a list of players
     ArrayList<String> players = new ArrayList<String>();
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -34,17 +35,22 @@ public class AddGameActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_add_game);
+        //Create database handler
         final DatabaseHandler db = new DatabaseHandler(this);
+        //Set data for autocomplete feilds
         setAutocompleteData(db);
+        //Get AutoCompleteTextViews
         final AutoCompleteTextView editTxtPlayer1 = findViewById(R.id.player1Entry);
         final AutoCompleteTextView editTxtPlayer2 = findViewById(R.id.player2Entry);
+        //Set Threshhold
         editTxtPlayer1.setThreshold(1);
         editTxtPlayer2.setThreshold(1);
+        //Set an array adapter for Autocomplete
         ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.select_dialog_item ,players);
         editTxtPlayer1.setAdapter(adapter);
         editTxtPlayer2.setAdapter(adapter);
         
-
+        //Create button to swap names
         ImageButton flipButton = (ImageButton)findViewById(R.id.swapPlayersButton);
         flipButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -175,6 +181,7 @@ public class AddGameActivity extends AppCompatActivity {
              */
             private void askForPlayer(final String uID, final String uID2)
             {
+                //Crete alert to ask whether to create player
                 new AlertDialog.Builder(AddGameActivity.this)
                         .setTitle("Create Player")
                         .setMessage(String.format(
@@ -223,10 +230,12 @@ public class AddGameActivity extends AppCompatActivity {
     public void setAutocompleteData(DatabaseHandler db)
     {
         try {
+            //Get cursor from DB
             Cursor playerList = db.getAllPlayers("uID", true);
             if (playerList != null) {
                 playerList.moveToFirst();
                 do {
+                    //Add player to list for autocomplete
                     players.add(playerList.getString(0));
                 } while (playerList.moveToNext());
                 playerList.close();
@@ -234,6 +243,7 @@ public class AddGameActivity extends AppCompatActivity {
         }
         catch (Exception ex)
         {
+            //Make toast if something went wrong
             Toast.makeText(this, "AutoComplete was not able to index players", Toast.LENGTH_SHORT).show();
         }
     }

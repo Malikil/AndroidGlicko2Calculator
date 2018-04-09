@@ -28,11 +28,14 @@ public class GamesActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_games);
+        //Create a toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        //Put back button in toolbar
         putInToolbar(toolbar);
+        //Get database
         final DatabaseHandler db = new DatabaseHandler(this);
-
+        //Set list adapter
         ((ListView)findViewById(R.id.gamesList)).setAdapter(
                 new GamesAdapter(this, db.getGames("gameID", true))
         );
@@ -128,6 +131,7 @@ public class GamesActivity extends AppCompatActivity
     }
 
     private void putInToolbar(Toolbar toolbar) {
+        //Get arrow and resize
         Drawable drawable = getResources().getDrawable(R.drawable.arrow);
         drawable = resize(drawable, 64, 64);
         toolbar.setNavigationIcon(drawable);
@@ -139,6 +143,7 @@ public class GamesActivity extends AppCompatActivity
         });
     }
     private Drawable resize(Drawable image, int width, int height) {
+        //Resize using bitmap scaling
         Bitmap b = ((BitmapDrawable)image).getBitmap();
         Bitmap bitmapResized = Bitmap.createScaledBitmap(b, width, height, false);
         return new BitmapDrawable(getResources(), bitmapResized);

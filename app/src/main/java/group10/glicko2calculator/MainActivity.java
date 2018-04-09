@@ -13,6 +13,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //Get all buttons
         final Button infoButton = findViewById(R.id.viewInfoButton),
                      playersButton = findViewById(R.id.viewPlayersButton),
                      gamesButton = findViewById(R.id.viewGamesButton),

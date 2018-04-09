@@ -26,7 +26,7 @@ public class SettingsActivity extends AppCompatActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
-
+        //Get shared preferences
         preferences = PreferenceManager.getDefaultSharedPreferences(this);
         final float tau = preferences.getFloat("System Tau", 0.75F);
         final double rating = Double.longBitsToDouble(preferences.getLong(
@@ -41,17 +41,17 @@ public class SettingsActivity extends AppCompatActivity
                 "Default Volatility",
                 Double.doubleToLongBits(0.06))
         );
-
+        //Get edittexts
         final EditText tauText = findViewById(R.id.tauEntry),
                        ratingText = findViewById(R.id.defRatingEntry),
                        deviationText = findViewById(R.id.defDeviationEntry),
                        volatilityText = findViewById(R.id.defVolatilityEntry);
-
+        //Set edittexts programatically
         tauText.setText(Float.toString(tau));
         ratingText.setText(Double.toString(rating));
         deviationText.setText(Double.toString(deviation));
         volatilityText.setText(Double.toString(volatility));
-
+        //Make save button save
         ((Button)findViewById(R.id.saveButton)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view)
@@ -127,6 +127,7 @@ public class SettingsActivity extends AppCompatActivity
 
     private void putValues(float tau, double rating, double deviation, double volatility)
     {
+        //Save preferences
         SharedPreferences.Editor editor = preferences.edit();
         editor.putFloat("System Tau", tau);
         editor.putLong("Default Rating", Double.doubleToLongBits(rating));

@@ -22,12 +22,12 @@ public class AddPlayerActivity extends AppCompatActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_player);
-
+        //Get text views
         final EditText pName = findViewById(R.id.nameEntry),
                     ratingEntry = findViewById(R.id.ratingEntry),
                     deviationEntry = findViewById(R.id.deviationEntry),
                     volatilityEntry = findViewById(R.id.volatilityEntry);
-
+        //Get shared preferences
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
         final double defaultRating = Double.longBitsToDouble(preferences.getLong(
                 "Default Rating",
@@ -40,11 +40,12 @@ public class AddPlayerActivity extends AppCompatActivity
                 "Default Volatility",
                 Double.doubleToLongBits(0.06))
         );
-
+        //Set hint for text views programatically
         ratingEntry.setHint(Double.toString(defaultRating));
         deviationEntry.setHint(Double.toString(defaultDeviation));
         volatilityEntry.setHint(Double.toString(defaultVolatility));
 
+        //Make save button save and cancel button cancel
         findViewById(R.id.saveButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view)
