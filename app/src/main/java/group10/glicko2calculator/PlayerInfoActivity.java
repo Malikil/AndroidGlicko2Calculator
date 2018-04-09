@@ -57,34 +57,44 @@ public class PlayerInfoActivity extends AppCompatActivity
                 EditText ratingEntry = findViewById(R.id.ratingEntry),
                         deviationEntry = findViewById(R.id.deviationEntry),
                         volatilityEntry = findViewById(R.id.volatilityEntry);
-                double newRating = Double.parseDouble(ratingEntry.getText().toString()),
-                        newDeviation = Double.parseDouble(deviationEntry.getText().toString()),
-                        newVolatility = Double.parseDouble(volatilityEntry.getText().toString());
-                // Check if values are different
-                ContentValues cv = new ContentValues();
-                if (Math.abs(initRating - newRating) > Double.MIN_NORMAL * DOUBLE_EQUALITY)
-                    cv.put("rating", newRating);
-                if (Math.abs(initDeviation - newDeviation) > Double.MIN_NORMAL * DOUBLE_EQUALITY)
-                    cv.put("deviation", newDeviation);
-                if (Math.abs(initVolatility - newVolatility) > Double.MIN_NORMAL * DOUBLE_EQUALITY)
-                    cv.put("volatility", newVolatility);
-                // Push values to database
-                if (cv.size() > 0)
+                try
                 {
-                    db.updatePlayer(pname, cv);
-                    Toast.makeText(
-                            PlayerInfoActivity.this,
-                            "Saved changes.",
-                            Toast.LENGTH_SHORT
-                    ).show();
-                    setResult(RESULT_OK);
+                    double newRating = Double.parseDouble(ratingEntry.getText().toString()),
+                            newDeviation = Double.parseDouble(deviationEntry.getText().toString()),
+                            newVolatility = Double.parseDouble(volatilityEntry.getText().toString());
+                    // Check if values are different
+                    ContentValues cv = new ContentValues();
+                    if (Math.abs(initRating - newRating) > Double.MIN_NORMAL * DOUBLE_EQUALITY)
+                        cv.put("rating", newRating);
+                    if (Math.abs(initDeviation - newDeviation) > Double.MIN_NORMAL * DOUBLE_EQUALITY)
+                        cv.put("deviation", newDeviation);
+                    if (Math.abs(initVolatility - newVolatility) > Double.MIN_NORMAL * DOUBLE_EQUALITY)
+                        cv.put("volatility", newVolatility);
+                    // Push values to database
+                    if (cv.size() > 0) {
+                        db.updatePlayer(pname, cv);
+                        Toast.makeText(
+                                PlayerInfoActivity.this,
+                                "Saved changes.",
+                                Toast.LENGTH_SHORT
+                        ).show();
+                        setResult(RESULT_OK);
+                    } else
+                        Toast.makeText(
+                                PlayerInfoActivity.this,
+                                "No changes to save.",
+                                Toast.LENGTH_SHORT
+                        ).show();
                 }
-                else
+                catch (NumberFormatException nfe)
+                {
                     Toast.makeText(
                             PlayerInfoActivity.this,
-                            "No changes to save.",
+                            "Please enter proper decimal numbers for Rating, Rating Deviation, " +
+                                    "and Volatility.",
                             Toast.LENGTH_SHORT
                     ).show();
+                }
             }
         });
         findViewById(R.id.deleteButton).setOnClickListener(new View.OnClickListener() {

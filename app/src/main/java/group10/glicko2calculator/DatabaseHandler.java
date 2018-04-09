@@ -71,10 +71,11 @@ class DatabaseHandler extends SQLiteOpenHelper
                 "SELECT uID FROM Players " +
                         "WHERE uID = ?;",
                 new String[] { uID });
-        if (result != null && result.getCount() > 0)
+        if (result != null)
         {
+            int count = result.getCount();
             result.close();
-            return true;
+            return count > 0;
         }
         else
             return false;

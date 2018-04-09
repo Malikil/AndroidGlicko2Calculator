@@ -63,11 +63,11 @@ public class PlayersAdapter extends BaseAdapter
         ((TextView)view.findViewById(R.id.column1)).setText(cursor.getString(0));
         ((TextView)view.findViewById(R.id.column2)).setText(String.format(
                 Locale.CANADA,
-                "%.0f",
+                "%.1f",
                 cursor.getFloat(1)));
         ((TextView)view.findViewById(R.id.column3)).setText(String.format(
                 Locale.CANADA,
-                "%.1f",
+                "%.2f",
                 cursor.getFloat(2)));
 
         return view;

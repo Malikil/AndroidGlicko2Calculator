@@ -244,7 +244,8 @@ public class AddGameActivity extends AppCompatActivity {
         try {
             //Get cursor from DB
             Cursor playerList = db.getAllPlayers("uID", true);
-            if (playerList != null) {
+            if (playerList != null && playerList.getCount() > 0)
+            {
                 playerList.moveToFirst();
                 do {
                     //Add player to list for autocomplete
